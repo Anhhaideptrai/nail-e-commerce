@@ -1,0 +1,11 @@
+{
+  "name": "@source/storefront",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "@source/ui": "workspace:*",
+    "next": "~16.1.6",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  }
+}
