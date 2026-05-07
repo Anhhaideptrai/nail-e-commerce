@@ -1,0 +1,134 @@
+{
+  "common": {
+    "currency": "€",
+    "addToBag": "Ajouter au Panier",
+    "continueShopping": "Continuer les Achats",
+    "viewBag": "Voir le Panier et Commander",
+    "checkout": "Commander",
+    "subtotal": "Sous-total",
+    "total": "Total",
+    "discount": "Remise",
+    "shippingFree": "Livraison Gratuite",
+    "shippingCalculated": "Frais de port calculés à la caisse",
+    "quantity": "Qté",
+    "size": "Taille",
+    "shape": "Forme",
+    "length": "Longueur",
+    "loading": "Chargement...",
+    "error": "Erreur",
+    "success": "Succès"
+  },
+  "nav": {
+    "home": "Accueil",
+    "shop": "Boutique",
+    "collections": "Collections",
+    "wholesale": "Grossiste",
+    "about": "À Propos",
+    "contact": "Contact",
+    "cart": "Panier",
+    "trackOrder": "Suivre Commande"
+  },
+  "home": {
+    "hero": {
+      "title": "Faux Ongles de Luxe",
+      "subtitle": "Élégance artisanale au bout de vos doigts",
+      "shopNow": "Acheter Maintenant"
+    },
+    "featured": "Collections en Vedette",
+    "newArrivals": "Nouveautés"
+  },
+  "product": {
+    "soldOut": "Épuisé",
+    "inStock": "En Stock",
+    "selectSize": "Choisir la Taille",
+    "selectShape": "Choisir la Forme",
+    "selectLength": "Choisir la Longueur",
+    "sizeGuide": "Guide des Tailles",
+    "addedToCart": "Ajouté au Panier ✓",
+    "selectOptions": "Sélectionner Options",
+    "description": "Description",
+    "shippingReturns": "Livraison et Retours",
+    "material": "Matériel",
+    "processingTime": "Délai de Traitement",
+    "relatedProducts": "Produits Connexes",
+    "youMayLike": "Vous Aimerez Aussi"
+  },
+  "cart": {
+    "title": "Panier",
+    "empty": "Votre panier est vide",
+    "emptyDescription": "Ajoutez des articles pour commencer",
+    "shopNow": "Acheter Maintenant",
+    "removeItem": "Retirer",
+    "applyDiscount": "Appliquer Code de Réduction",
+    "discountPlaceholder": "Entrez le code",
+    "apply": "Appliquer",
+    "invalidCode": "Code de réduction invalide",
+    "discountApplied": "Remise appliquée !",
+    "orderSummary": "Résumé de la Commande",
+    "proceedToCheckout": "Passer à la Caisse"
+  },
+  "checkout": {
+    "title": "Paiement",
+    "shippingInfo": "Informations de Livraison",
+    "firstName": "Prénom",
+    "lastName": "Nom",
+    "email": "Email",
+    "phone": "Téléphone",
+    "address": "Adresse",
+    "city": "Ville",
+    "postalCode": "Code Postal",
+    "country": "Pays",
+    "paymentMethod": "Mode de Paiement",
+    "creditCard": "Carte de Crédit",
+    "paypal": "PayPal",
+    "placeOrder": "Passer la Commande",
+    "processing": "Traitement en cours...",
+    "orderSuccess": "Commande Passée avec Succès !",
+    "orderNumber": "Numéro de Commande",
+    "thankYou": "Merci pour votre commande",
+    "emailConfirmation": "Un email de confirmation a été envoyé à",
+    "trackYourOrder": "Suivre Votre Commande",
+    "required": "Requis",
+    "invalidEmail": "Adresse email invalide"
+  },
+  "wholesale": {
+    "title": "Demande de Grossiste",
+    "subtitle": "Partenariat avec LUNELLE",
+    "description": "Nous offrons des tarifs de gros exclusifs pour les boutiques, salons et détaillants. Remplissez le formulaire ci-dessous et notre équipe vous répondra sous 24-48 heures.",
+    "businessName": "Nom de l'Entreprise",
+    "contactName": "Nom du Contact",
+    "email": "Email",
+    "phone": "Téléphone",
+    "businessType": "Type d'Entreprise",
+    "message": "Message",
+    "submit": "Envoyer la Demande",
+    "success": "Votre demande a été soumise avec succès !",
+    "error": "Échec de la soumission. Veuillez réessayer."
+  },
+  "tracking": {
+    "title": "Suivre Votre Commande",
+    "orderId": "Numéro de Commande",
+    "phone": "Numéro de Téléphone",
+    "track": "Suivre la Commande",
+    "notFound": "Commande introuvable",
+    "status": {
+      "processing": "En Traitement",
+      "shipped": "Expédiée",
+      "delivered": "Livrée"
+    }
+  },
+  "admin": {
+    "title": "Tableau de Bord Admin",
+    "orders": "Commandes",
+    "products": "Produits",
+    "inventory": "Inventaire",
+    "orderDetails": "Détails de la Commande",
+    "updateStatus": "Mettre à Jour le Statut",
+    "save": "Enregistrer les Modifications"
+  },
+  "trust": {
+    "freeShipping": "Livraison gratuite dès 50€",
+    "returns": "Retours sous 14 jours",
+    "handmade": "Fait main avec soin"
+  }
+}

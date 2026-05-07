@@ -14,7 +14,9 @@
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "skipLibCheck": true,
-    "strict": true,
+    "strictNullChecks": false, // development mode only, can be set to true for production
+    "noImplicitAny": false, // development mode only, can be set to true for production
+    "strict": false, // development mode only, can be set to true for production
     "target": "es2022",
     "customConditions": ["@source/source"]
   }

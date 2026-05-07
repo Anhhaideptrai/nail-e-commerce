@@ -4,7 +4,12 @@
   "private": true,
   "dependencies": {
     "@source/ui": "workspace:*",
+    "@stripe/react-stripe-js": "^6.3.0",
+    "framer-motion": "^12.38.0",
+    "i18next": "^26.0.10",
+    "motion": "^12.38.0",
     "next": "~16.1.6",
+    "next-i18next": "^16.0.5",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   }
