@@ -4,13 +4,7 @@
   "files": [],
   "references": [
     {
-      "path": "./apps/storefront-e2e"
-    },
-    {
       "path": "./apps/storefront"
-    },
-    {
-      "path": "./apps/admin-e2e"
     },
     {
       "path": "./apps/admin"
@@ -29,6 +23,9 @@
     },
     {
       "path": "./libs/config"
+    },
+    {
+      "path": "./apps/api"
     }
   ]
 }

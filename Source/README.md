@@ -1,36 +1,35 @@
-# Nail Mini E-Commerce Frontend
+# Nail Mini E-Commerce
 
-Frontend monorepo cho du an website ban bo nail nghe thuat huong den thi truong EU.
+Nx monorepo cho du an website ban bo nail nghe thuat huong den thi truong EU.
 
-Workspace nay chi chua phan frontend:
+Workspace nay gom 3 app chinh:
 
 - `storefront`: website cho end user, uu tien SEO va trai nghiem mua hang.
 - `admin`: web app CMS/admin de quan tri san pham, collection, don hang va cac cau hinh van hanh.
-
-Backend duoc quan ly o repository/thu muc rieng.
+- `api`: NestJS backend API cho nghiep vu ecommerce.
 
 ## Tech Stack
 
 - Monorepo: Nx
 - Package manager: pnpm
 - Runtime: Node.js 24
-- Framework: Next.js App Router
+- Frontend framework: Next.js App Router
+- Backend framework: NestJS
 - Language: TypeScript
 - Styling: Tailwind CSS
 - UI utilities: clsx, tailwind-merge, class-variance-authority, lucide-react
 - Forms/validation: React Hook Form, Zod, @hookform/resolvers
 - Data/table: TanStack Query, TanStack Table
-- Test: Jest, Playwright
+- Test: Jest
 - Lint/format: ESLint, Prettier
 
 ## Cau Truc
 
 ```txt
 apps/
+  api/              # NestJS backend API
   storefront/       # Public ecommerce storefront
-  storefront-e2e/   # E2E tests for storefront
   admin/            # CMS/admin web app
-  admin-e2e/        # E2E tests for admin
 
 libs/
   ui/               # Shared React UI components
@@ -94,11 +93,24 @@ Mac dinh chay tai:
 http://localhost:4201
 ```
 
+API:
+
+```sh
+pnpm.cmd dev:api
+```
+
+Mac dinh chay tai:
+
+```txt
+http://localhost:3000/api
+```
+
 Co the chay truc tiep bang Nx:
 
 ```sh
 pnpm.cmd nx dev storefront --port=4200
 pnpm.cmd nx dev admin --port=4201
+pnpm.cmd nx serve api
 ```
 
 ## Build
@@ -114,6 +126,7 @@ Build rieng tung app:
 ```sh
 pnpm.cmd nx build storefront
 pnpm.cmd nx build admin
+pnpm.cmd nx build api
 ```
 
 Chay production server sau khi build:
@@ -121,6 +134,8 @@ Chay production server sau khi build:
 ```sh
 pnpm.cmd nx start storefront --port=4300
 pnpm.cmd nx start admin --port=4301
+$env:PORT = '3000'
+pnpm.cmd nx serve api
 ```
 
 ## Lint, Test, Sync
@@ -149,26 +164,13 @@ Kiem tra tong hop:
 pnpm.cmd nx run-many -t lint test build
 ```
 
-## E2E
-
-Workspace da tao san:
-
-- `apps/storefront-e2e`
-- `apps/admin-e2e`
-
-Hien tai E2E duoc giu lai de dung cho cac flow quan trong sau nay:
-
-- Storefront: product detail, cart, checkout.
-- Admin: login, CRUD product, order processing.
-
-Luu y: tren mot so moi truong corporate/proxy, Playwright co the khong tai duoc browser va bao loi `SELF_SIGNED_CERT_IN_CHAIN`. Khi do can cau hinh certificate/proxy hoac cai browser Playwright thu cong truoc khi chay E2E.
-
 ## Quy Uoc Phat Trien
 
-- Logic nghiep vu quan trong nhu tinh tong don hang, discount, shipping fee va payment status phai nam o backend.
+- Logic nghiep vu quan trong nhu tinh tong don hang, discount, shipping fee va payment status phai nam trong `apps/api`.
 - Frontend chi nen giu UI state, client validation, API client, format/display helpers.
-- Shared code dung chung cho `storefront` va `admin` dat trong `libs`.
+- Shared code dung chung cho `storefront`, `admin` va `api` dat trong `libs`.
 - Khi app dung mot workspace lib, khai bao dependency bang `workspace:*` trong `package.json` cua app do.
+- Khong import truc tiep backend internals vao frontend. Neu can dung chung, dua vao `libs/types`, `libs/validators` hoac lib contract rieng.
 
 ## Lenh Huu Ich
 
@@ -183,6 +185,7 @@ Xem target cua mot project:
 ```sh
 pnpm.cmd nx show project storefront
 pnpm.cmd nx show project admin
+pnpm.cmd nx show project api
 ```
 
 Xem dependency graph:
