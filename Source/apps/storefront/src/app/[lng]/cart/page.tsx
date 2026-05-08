@@ -1,5 +1,7 @@
+'use client'
+
 import { useState } from 'react';
-import {  useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Minus, Plus, X, ArrowRight, Tag, ShoppingBag } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';

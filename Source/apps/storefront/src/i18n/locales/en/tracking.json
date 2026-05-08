@@ -1,0 +1,12 @@
+{
+    "title": "Track Your Order",
+    "orderId": "Order ID",
+    "phone": "Phone Number",
+    "track": "Track Order",
+    "notFound": "Order not found",
+    "status": {
+        "processing": "Processing",
+        "shipped": "Shipped",
+        "delivered": "Delivered"
+    }
+}

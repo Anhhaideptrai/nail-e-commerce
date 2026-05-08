@@ -1,3 +1,5 @@
+'use client'
+
 import { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -10,11 +12,11 @@ import { getProductById, getRelatedProducts } from '@/MOCK_DATAS/products';
 import { useCart, CartItem } from '@/context/CartContext';
 
 export default function ProductDetailPage() {
-  const { id } = useParams();
+  const { slug } = useParams();
   const router = useRouter();
   const { dispatch, cartCount, subtotal } = useCart();
 
-  const product = getProductById(id.toString() || '');
+  const product = getProductById(slug.toString() || '');
   const related = product ? getRelatedProducts(product) : [];
 
   const [selectedImage, setSelectedImage] = useState(0);
@@ -128,7 +130,7 @@ export default function ProductDetailPage() {
     <div className="min-h-screen pt-16 md:pt-20">
       {/* Breadcrumb */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex items-center gap-2 text-xs text-[#9A9A9A]">
-        <button onClick={() => router.push(`/products/${id}`)} className="flex items-center gap-1.5 hover:text-[#1A1A1A] transition-colors">
+        <button onClick={() => router.push(`/products/${slug}`)} className="flex items-center gap-1.5 hover:text-[#1A1A1A] transition-colors">
           <ArrowLeft className="size-3" />
           Back
         </button>
@@ -185,7 +187,7 @@ export default function ProductDetailPage() {
             {/* Rating */}
             <div className="flex items-center gap-2 mb-5">
               <div className="flex">
-                {[1,2,3,4,5].map(star => (
+                {[1, 2, 3, 4, 5].map(star => (
                   <Star key={star} className={`size-3.5 ${star <= Math.round(product.rating) ? 'fill-[#C0C0C0] text-[#C0C0C0]' : 'text-[#E0E0E0]'}`} />
                 ))}
               </div>
@@ -222,11 +224,10 @@ export default function ProductDetailPage() {
                   <button
                     key={size}
                     onClick={() => setSelectedSize(size)}
-                    className={`px-4 py-2 text-xs border transition-all ${
-                      selectedSize === size
-                        ? 'border-[#1A1A1A] bg-[#1A1A1A] text-white'
-                        : 'border-[#E0E0E0] text-[#1A1A1A] hover:border-[#9A9A9A]'
-                    }`}
+                    className={`px-4 py-2 text-xs border transition-all ${selectedSize === size
+                      ? 'border-[#1A1A1A] bg-[#1A1A1A] text-white'
+                      : 'border-[#E0E0E0] text-[#1A1A1A] hover:border-[#9A9A9A]'
+                      }`}
                   >
                     {size}
                   </button>
@@ -244,11 +245,10 @@ export default function ProductDetailPage() {
                   <button
                     key={shape}
                     onClick={() => setSelectedShape(shape)}
-                    className={`px-4 py-2 text-xs border transition-all ${
-                      selectedShape === shape
-                        ? 'border-[#1A1A1A] bg-[#1A1A1A] text-white'
-                        : 'border-[#E0E0E0] text-[#1A1A1A] hover:border-[#9A9A9A]'
-                    }`}
+                    className={`px-4 py-2 text-xs border transition-all ${selectedShape === shape
+                      ? 'border-[#1A1A1A] bg-[#1A1A1A] text-white'
+                      : 'border-[#E0E0E0] text-[#1A1A1A] hover:border-[#9A9A9A]'
+                      }`}
                   >
                     {shape}
                   </button>
@@ -266,11 +266,10 @@ export default function ProductDetailPage() {
                   <button
                     key={length}
                     onClick={() => setSelectedLength(length)}
-                    className={`px-4 py-2 text-xs border transition-all ${
-                      selectedLength === length
-                        ? 'border-[#1A1A1A] bg-[#1A1A1A] text-white'
-                        : 'border-[#E0E0E0] text-[#1A1A1A] hover:border-[#9A9A9A]'
-                    }`}
+                    className={`px-4 py-2 text-xs border transition-all ${selectedLength === length
+                      ? 'border-[#1A1A1A] bg-[#1A1A1A] text-white'
+                      : 'border-[#E0E0E0] text-[#1A1A1A] hover:border-[#9A9A9A]'
+                      }`}
                   >
                     {length}
                   </button>
@@ -299,19 +298,18 @@ export default function ProductDetailPage() {
               <button
                 onClick={handleAddToCart}
                 disabled={!canAddToCart}
-                className={`flex-1 flex items-center justify-center gap-2 py-3.5 text-xs uppercase tracking-widest transition-all ${
-                  canAddToCart
-                    ? 'bg-[#1A1A1A] text-white hover:bg-[#333]'
-                    : 'bg-[#E0E0E0] text-[#9A9A9A] cursor-not-allowed'
-                }`}
+                className={`flex-1 flex items-center justify-center gap-2 py-3.5 text-xs uppercase tracking-widest transition-all ${canAddToCart
+                  ? 'bg-[#1A1A1A] text-white hover:bg-[#333]'
+                  : 'bg-[#E0E0E0] text-[#9A9A9A] cursor-not-allowed'
+                  }`}
                 style={{ letterSpacing: '0.15em' }}
               >
                 <ShoppingBag className="size-4" />
                 {!product.inStock
                   ? 'Sold Out'
                   : !canAddToCart
-                  ? 'Select Options'
-                  : 'Add to Bag'}
+                    ? 'Select Options'
+                    : 'Add to Bag'}
               </button>
             </div>
 

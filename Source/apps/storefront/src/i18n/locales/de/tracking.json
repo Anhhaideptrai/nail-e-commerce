@@ -1,0 +1,12 @@
+{
+    "title": "Bestellung Verfolgen",
+    "orderId": "Bestellnummer",
+    "phone": "Telefonnummer",
+    "track": "Bestellung Verfolgen",
+    "notFound": "Bestellung nicht gefunden",
+    "status": {
+        "processing": "In Bearbeitung",
+        "shipped": "Versendet",
+        "delivered": "Zugestellt"
+    }
+}

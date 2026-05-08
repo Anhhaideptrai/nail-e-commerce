@@ -1,0 +1,16 @@
+{
+    "soldOut": "Ausverkauft",
+    "inStock": "Auf Lager",
+    "selectSize": "Größe Wählen",
+    "selectShape": "Form Wählen",
+    "selectLength": "Länge Wählen",
+    "sizeGuide": "Größentabelle",
+    "addedToCart": "Zum Warenkorb Hinzugefügt ✓",
+    "selectOptions": "Optionen Wählen",
+    "description": "Beschreibung",
+    "shippingReturns": "Versand & Rücksendung",
+    "material": "Material",
+    "processingTime": "Bearbeitungszeit",
+    "relatedProducts": "Ähnliche Produkte",
+    "youMayLike": "Das Könnte Ihnen Auch Gefallen"
+}

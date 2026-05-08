@@ -1,0 +1,16 @@
+{
+    "soldOut": "Épuisé",
+    "inStock": "En Stock",
+    "selectSize": "Choisir la Taille",
+    "selectShape": "Choisir la Forme",
+    "selectLength": "Choisir la Longueur",
+    "sizeGuide": "Guide des Tailles",
+    "addedToCart": "Ajouté au Panier ✓",
+    "selectOptions": "Sélectionner Options",
+    "description": "Description",
+    "shippingReturns": "Livraison et Retours",
+    "material": "Matériel",
+    "processingTime": "Délai de Traitement",
+    "relatedProducts": "Produits Connexes",
+    "youMayLike": "Vous Aimerez Aussi"
+}

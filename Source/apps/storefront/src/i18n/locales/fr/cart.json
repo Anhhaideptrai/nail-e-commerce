@@ -1,0 +1,14 @@
+{
+    "title": "Panier",
+    "empty": "Votre panier est vide",
+    "emptyDescription": "Ajoutez des articles pour commencer",
+    "shopNow": "Acheter Maintenant",
+    "removeItem": "Retirer",
+    "applyDiscount": "Appliquer Code de Réduction",
+    "discountPlaceholder": "Entrez le code",
+    "apply": "Appliquer",
+    "invalidCode": "Code de réduction invalide",
+    "discountApplied": "Remise appliquée !",
+    "orderSummary": "Résumé de la Commande",
+    "proceedToCheckout": "Passer à la Caisse"
+}

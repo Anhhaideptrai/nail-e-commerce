@@ -1,0 +1,12 @@
+{
+    "title": "Suivre Votre Commande",
+    "orderId": "Numéro de Commande",
+    "phone": "Numéro de Téléphone",
+    "track": "Suivre la Commande",
+    "notFound": "Commande introuvable",
+    "status": {
+        "processing": "En Traitement",
+        "shipped": "Expédiée",
+        "delivered": "Livrée"
+    }
+}

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
 import { Product, DISCOUNT_CODES } from '../MOCK_DATAS/products';
 
@@ -99,9 +101,9 @@ function cartReducer(state: CartState, action: CartAction): CartState {
         ...state,
         items: state.items.map(i =>
           i.product.id === action.payload.productId &&
-          i.size === action.payload.size &&
-          i.shape === action.payload.shape &&
-          i.length === action.payload.length
+            i.size === action.payload.size &&
+            i.shape === action.payload.shape &&
+            i.length === action.payload.length
             ? { ...i, quantity: action.payload.quantity }
             : i
         ),

@@ -1,3 +1,5 @@
+'use client'
+
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Search, Package, Truck, Check, Clock, AlertCircle } from 'lucide-react';

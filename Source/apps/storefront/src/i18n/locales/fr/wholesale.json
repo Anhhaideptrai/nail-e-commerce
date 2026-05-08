@@ -1,0 +1,14 @@
+{
+    "title": "Demande de Grossiste",
+    "subtitle": "Partenariat avec LUNELLE",
+    "description": "Nous offrons des tarifs de gros exclusifs pour les boutiques, salons et détaillants. Remplissez le formulaire ci-dessous et notre équipe vous répondra sous 24-48 heures.",
+    "businessName": "Nom de l'Entreprise",
+    "contactName": "Nom du Contact",
+    "email": "Email",
+    "phone": "Téléphone",
+    "businessType": "Type d'Entreprise",
+    "message": "Message",
+    "submit": "Envoyer la Demande",
+    "success": "Votre demande a été soumise avec succès !",
+    "error": "Échec de la soumission. Veuillez réessayer."
+}

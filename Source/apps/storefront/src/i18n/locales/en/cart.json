@@ -1,0 +1,14 @@
+{
+    "title": "Shopping Bag",
+    "empty": "Your bag is empty",
+    "emptyDescription": "Add items to get started",
+    "shopNow": "Shop Now",
+    "removeItem": "Remove",
+    "applyDiscount": "Apply Discount Code",
+    "discountPlaceholder": "Enter code",
+    "apply": "Apply",
+    "invalidCode": "Invalid discount code",
+    "discountApplied": "Discount applied!",
+    "orderSummary": "Order Summary",
+    "proceedToCheckout": "Proceed to Checkout"
+}

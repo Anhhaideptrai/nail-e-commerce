@@ -1,0 +1,16 @@
+{
+    "soldOut": "Sold Out",
+    "inStock": "In Stock",
+    "selectSize": "Select Size",
+    "selectShape": "Select Shape",
+    "selectLength": "Select Length",
+    "sizeGuide": "Size Guide",
+    "addedToCart": "Added to Bag ✓",
+    "selectOptions": "Select Options",
+    "description": "Description",
+    "shippingReturns": "Shipping & Returns",
+    "material": "Material",
+    "processingTime": "Processing Time",
+    "relatedProducts": "Related Products",
+    "youMayLike": "You May Also Like"
+}

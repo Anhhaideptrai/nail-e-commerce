@@ -1,0 +1,14 @@
+{
+    "title": "Warenkorb",
+    "empty": "Ihr Warenkorb ist leer",
+    "emptyDescription": "Fügen Sie Artikel hinzu, um zu beginnen",
+    "shopNow": "Jetzt Einkaufen",
+    "removeItem": "Entfernen",
+    "applyDiscount": "Rabattcode Anwenden",
+    "discountPlaceholder": "Code eingeben",
+    "apply": "Anwenden",
+    "invalidCode": "Ungültiger Rabattcode",
+    "discountApplied": "Rabatt angewendet!",
+    "orderSummary": "Bestellübersicht",
+    "proceedToCheckout": "Zur Kasse Gehen"
+}

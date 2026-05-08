@@ -1,9 +1,11 @@
+'use client'
+
 import { useState } from 'react';
 import { motion } from 'motion/react';
 import { Check, ArrowRight, Globe, Package, Handshake } from 'lucide-react';
 import Link from 'next/link';
 
-const PRODUCT_INTERESTS = [  'French & Classic',
+const PRODUCT_INTERESTS = ['French & Classic',
   'Glitter & Metallic',
   'Nail Art',
   'Solid Colors',
@@ -225,11 +227,10 @@ export default function WholesalePage() {
                     key={item}
                     type="button"
                     onClick={() => toggleInterest(item)}
-                    className={`px-4 py-2 text-xs border transition-all ${
-                      form.interests.includes(item)
+                    className={`px-4 py-2 text-xs border transition-all ${form.interests.includes(item)
                         ? 'border-[#1A1A1A] bg-[#1A1A1A] text-white'
                         : 'border-[#E0E0E0] text-[#6A6A6A] hover:border-[#9A9A9A]'
-                    }`}
+                      }`}
                   >
                     {item}
                   </button>

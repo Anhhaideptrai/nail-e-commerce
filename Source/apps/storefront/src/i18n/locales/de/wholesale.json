@@ -1,0 +1,14 @@
+{
+    "title": "Großhandelsanfrage",
+    "subtitle": "Partner von LUNELLE",
+    "description": "Wir bieten exklusive Großhandelspreise für Boutiquen, Salons und Einzelhändler. Füllen Sie das Formular aus und unser Team wird sich innerhalb von 24-48 Stunden bei Ihnen melden.",
+    "businessName": "Firmenname",
+    "contactName": "Kontaktname",
+    "email": "E-Mail",
+    "phone": "Telefon",
+    "businessType": "Geschäftstyp",
+    "message": "Nachricht",
+    "submit": "Anfrage Senden",
+    "success": "Ihre Anfrage wurde erfolgreich übermittelt!",
+    "error": "Übermittlung fehlgeschlagen. Bitte versuchen Sie es erneut."
+}

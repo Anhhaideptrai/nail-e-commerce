@@ -1,211 +1,324 @@
-import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router';
-import { ShoppingBag, Search, Menu, X, ChevronDown, User } from 'lucide-react';
+'use client';
+
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { usePathname, useRouter } from 'next/navigation';
+import {
+  ShoppingBag,
+  Search,
+  Menu,
+  X,
+  ChevronDown,
+  User,
+} from 'lucide-react';
+
 import { useCart } from '../../context/CartContext';
-import { COLLECTIONS } from '../../data/products';
+import { COLLECTIONS } from '@/MOCK_DATAS/products';
 import { LanguageSwitcher } from '../shared/LanguageSwitcher';
 
-const navLinks = [
+const NAV_LINKS = [
   { label: 'Shop', href: '/products' },
-  { label: 'Collections', href: '/products', hasDropdown: true },
-  { label: 'Wholesale', href: '/wholesale' },
-  { label: 'Track Order', href: '/order-tracking' },
+  { label: 'Collections', href: '/products', dropdown: true },
+  { label: 'Wholesale', href: '/wholesales' },
+  { label: 'Track Order', href: '/order/tracking' },
 ];
 
 export function Navbar() {
+  const pathname = usePathname();
+  const router = useRouter();
+  const { cartCount } = useCart();
+
   const [isScrolled, setIsScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
-  const [collectionsOpen, setCollectionsOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const { cartCount } = useCart();
-  const location = useLocation();
 
-  const isHome = location.pathname === '/';
+  const isHome = pathname === '/';
+  const isTransparent = isHome && !isScrolled;
 
   useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > 40);
-    window.addEventListener('scroll', onScroll);
-    return () => window.removeEventListener('scroll', onScroll);
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 40);
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, []);
 
   useEffect(() => {
     setMobileOpen(false);
     setSearchOpen(false);
-  }, [location]);
+  }, [pathname]);
 
-  const navBg = isHome && !isScrolled ? 'bg-transparent' : 'bg-white/95 backdrop-blur-md border-b border-[#E8E8E8]';
-  const textColor = isHome && !isScrolled ? 'text-white' : 'text-[#1A1A1A]';
-  const logoColor = isHome && !isScrolled ? 'text-white' : 'text-[#1A1A1A]';
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!searchQuery.trim()) return;
+
+    router.push(
+      `/products?search=${encodeURIComponent(searchQuery)}`
+    );
+  };
+
+  const textClass = isTransparent
+    ? 'text-white'
+    : 'text-[#1A1A1A]';
+
+  const headerClass = isTransparent
+    ? 'bg-transparent'
+    : 'bg-white/95 backdrop-blur-md border-b border-[#E8E8E8]';
 
   return (
     <>
-      <header className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${navBg}`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16 md:h-20">
-            {/* Logo */}
-            <Link
-              to="/"
-              className={`flex-shrink-0 tracking-[0.3em] uppercase text-sm ${logoColor} transition-colors duration-300`}
-              style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600, fontSize: '1.25rem', letterSpacing: '0.25em' }}
-            >
-              LUNELLE
-            </Link>
+      <header
+        className={`fixed inset-x-0 top-0 z-50 transition-all duration-300 ${headerClass}`}
+      >
+        <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:h-20 lg:px-8">
+          <Link
+            href="/"
+            className={`text-sm uppercase tracking-[0.25em] transition-colors duration-300 ${textClass}`}
+            style={{
+              fontFamily: "'Cormorant Garamond', serif",
+              fontWeight: 600,
+              fontSize: '1.25rem',
+            }}
+          >
+            SILVER14 NAIL
+          </Link>
 
-            {/* Desktop Nav */}
-            <nav className="hidden md:flex items-center gap-8">
-              {navLinks.map(link => (
-                link.hasDropdown ? (
-                  <div key={link.label} className="relative group">
-                    <button
-                      className={`flex items-center gap-1 tracking-widest uppercase text-xs ${textColor} transition-colors duration-300 hover:opacity-70`}
-                      style={{ letterSpacing: '0.12em' }}
-                      onMouseEnter={() => setCollectionsOpen(true)}
-                      onMouseLeave={() => setCollectionsOpen(false)}
-                    >
-                      {link.label}
-                      <ChevronDown className="size-3" />
-                    </button>
-                    <div
-                      className={`absolute top-full left-1/2 -translate-x-1/2 pt-3 transition-all duration-200 ${collectionsOpen ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-1 pointer-events-none'}`}
-                      onMouseEnter={() => setCollectionsOpen(true)}
-                      onMouseLeave={() => setCollectionsOpen(false)}
-                    >
-                      <div className="bg-white border border-[#E5E5E5] shadow-lg rounded-sm py-2 min-w-[200px]">
-                        {COLLECTIONS.map(col => (
-                          <Link
-                            key={col.id}
-                            to={col.id === 'all' ? '/products' : `/products?collection=${col.id}`}
-                            className="block px-5 py-2.5 text-[#1A1A1A] text-xs tracking-widest uppercase hover:bg-[#F8F8F8] transition-colors"
-                            style={{ letterSpacing: '0.1em' }}
-                          >
-                            {col.label}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  </div>
-                ) : (
-                  <Link
-                    key={link.label}
-                    to={link.href}
-                    className={`tracking-widest uppercase text-xs ${textColor} transition-colors duration-300 hover:opacity-70`}
-                    style={{ letterSpacing: '0.12em' }}
+          {/* Desktop Nav */}
+          <nav className="hidden items-center gap-8 md:flex">
+            {NAV_LINKS.map((link) =>
+              link.dropdown ? (
+                <div
+                  key={link.label}
+                  className="group relative"
+                >
+                  <button
+                    className={`flex items-center gap-1 text-xs uppercase tracking-[0.12em] transition-opacity hover:opacity-70 ${textClass}`}
                   >
                     {link.label}
-                  </Link>
-                )
-              ))}
-            </nav>
+                    <ChevronDown className="size-3" />
+                  </button>
 
-            {/* Right Icons */}
-            <div className="flex items-center gap-2 md:gap-3">
-              <div className={`hidden md:block ${textColor === 'text-white' ? '[&_button]:text-white [&_button:hover]:text-white/70' : ''}`}>
-                <LanguageSwitcher />
-              </div>
-              <button
-                className={`${textColor} transition-all hover:opacity-70 p-1`}
-                onClick={() => setSearchOpen(!searchOpen)}
-              >
-                <Search className="size-[18px]" />
-              </button>
-              <Link
-                to="/account"
-                className={`hidden md:flex ${textColor} transition-all hover:opacity-70 p-1`}
-              >
-                <User className="size-[18px]" />
-              </Link>
-              <Link to="/cart" className={`relative ${textColor} transition-all hover:opacity-70 p-1`}>
-                <ShoppingBag className="size-[18px]" />
-                {cartCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-[#1A1A1A] text-white text-[9px] rounded-full size-4 flex items-center justify-center font-medium">
-                    {cartCount > 99 ? '99+' : cartCount}
-                  </span>
-                )}
-              </Link>
-              <button
-                className={`md:hidden ${textColor} transition-all hover:opacity-70 p-1`}
-                onClick={() => setMobileOpen(!mobileOpen)}
-              >
-                {mobileOpen ? <X className="size-5" /> : <Menu className="size-5" />}
-              </button>
+                  <div className="pointer-events-none absolute left-1/2 top-full z-50 w-52 -translate-x-1/2 pt-3 opacity-0 transition-all duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
+                    <div className="rounded-sm border border-[#E5E5E5] bg-white py-2 shadow-lg">
+                      {COLLECTIONS.map((col) => (
+                        <Link
+                          key={col.id}
+                          href={
+                            col.id === 'all'
+                              ? '/products'
+                              : `/products?collection=${col.id}`
+                          }
+                          className="block px-5 py-2.5 text-xs uppercase tracking-[0.1em] text-[#1A1A1A] transition-colors hover:bg-[#F8F8F8]"
+                        >
+                          {col.label}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+              ) : (
+                <Link
+                  key={link.label}
+                  href={link.href}
+                  className={`text-xs uppercase tracking-[0.12em] transition-opacity hover:opacity-70 ${textClass}`}
+                >
+                  {link.label}
+                </Link>
+              )
+            )}
+          </nav>
+
+          {/* Actions */}
+          <div className="flex items-center gap-2 md:gap-3">
+            <div
+              className={`hidden md:block ${isTransparent
+                ? '[&_button]:text-white'
+                : ''
+                }`}
+            >
+              <LanguageSwitcher />
             </div>
-          </div>
 
-          {/* Search Bar */}
-          {searchOpen && (
-            <div className="border-t border-[#E8E8E8] py-4 animate-in fade-in slide-in-from-top-2 duration-200">
+            <button
+              onClick={() =>
+                setSearchOpen((prev) => !prev)
+              }
+              className={`p-1 transition-opacity hover:opacity-70 ${textClass}`}
+            >
+              <Search className="size-[18px]" />
+            </button>
+
+            <Link
+              href="/account"
+              className={`hidden p-1 transition-opacity hover:opacity-70 md:flex ${textClass}`}
+            >
+              <User className="size-[18px]" />
+            </Link>
+
+            <Link
+              href="/cart"
+              className={`relative p-1 transition-opacity hover:opacity-70 ${textClass}`}
+            >
+              <ShoppingBag className="size-[18px]" />
+
+              {cartCount > 0 && (
+                <span className="absolute -right-1 -top-1 flex size-4 items-center justify-center rounded-full bg-black text-[9px] text-white">
+                  {cartCount > 99 ? '99+' : cartCount}
+                </span>
+              )}
+            </Link>
+
+            <button
+              onClick={() =>
+                setMobileOpen((prev) => !prev)
+              }
+              className={`p-1 transition-opacity hover:opacity-70 md:hidden ${textClass}`}
+            >
+              {mobileOpen ? (
+                <X className="size-5" />
+              ) : (
+                <Menu className="size-5" />
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* Search */}
+        {searchOpen && (
+          <div className="border-t border-[#E8E8E8] py-4">
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
               <form
-                onSubmit={(e) => {
-                  e.preventDefault();
-                  if (searchQuery.trim()) {
-                    window.location.href = `/products?search=${encodeURIComponent(searchQuery)}`;
-                  }
-                }}
+                onSubmit={handleSearch}
                 className="flex items-center gap-3"
               >
-                <Search className={`size-4 ${isHome && !isScrolled ? 'text-white' : 'text-[#9A9A9A]'}`} />
+                <Search
+                  className={`size-4 ${isTransparent
+                    ? 'text-white'
+                    : 'text-[#9A9A9A]'
+                    }`}
+                />
+
                 <input
                   autoFocus
                   value={searchQuery}
-                  onChange={e => setSearchQuery(e.target.value)}
+                  onChange={(e) =>
+                    setSearchQuery(e.target.value)
+                  }
                   placeholder="Search products..."
-                  className={`flex-1 bg-transparent outline-none text-sm tracking-wide ${isHome && !isScrolled ? 'text-white placeholder:text-white/60' : 'text-[#1A1A1A] placeholder:text-[#9A9A9A]'}`}
+                  className={`flex-1 bg-transparent text-sm outline-none ${isTransparent
+                    ? 'text-white placeholder:text-white/60'
+                    : 'text-[#1A1A1A] placeholder:text-[#9A9A9A]'
+                    }`}
                 />
-                <button type="button" onClick={() => setSearchOpen(false)}>
-                  <X className={`size-4 ${isHome && !isScrolled ? 'text-white' : 'text-[#9A9A9A]'}`} />
+
+                <button
+                  type="button"
+                  onClick={() => setSearchOpen(false)}
+                >
+                  <X
+                    className={`size-4 ${isTransparent
+                      ? 'text-white'
+                      : 'text-[#9A9A9A]'
+                      }`}
+                  />
                 </button>
               </form>
             </div>
-          )}
-        </div>
+          </div>
+        )}
       </header>
 
       {/* Mobile Menu */}
       {mobileOpen && (
         <div className="fixed inset-0 z-40 md:hidden">
-          <div className="absolute inset-0 bg-black/30" onClick={() => setMobileOpen(false)} />
-          <div className="absolute right-0 top-0 h-full w-72 bg-white shadow-xl flex flex-col">
-            <div className="flex items-center justify-between px-6 py-5 border-b border-[#E8E8E8]">
-              <span className="tracking-[0.2em] uppercase text-[#1A1A1A]" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600, fontSize: '1.1rem' }}>
+          <div
+            className="absolute inset-0 bg-black/30"
+            onClick={() => setMobileOpen(false)}
+          />
+
+          <aside className="absolute right-0 top-0 flex h-full w-72 flex-col bg-white shadow-xl">
+            <div className="flex items-center justify-between border-b border-[#E8E8E8] px-6 py-5">
+              <span
+                className="text-[1.1rem] uppercase tracking-[0.2em]"
+                style={{
+                  fontFamily:
+                    "'Cormorant Garamond', serif",
+                  fontWeight: 600,
+                }}
+              >
                 LUNELLE
               </span>
-              <button onClick={() => setMobileOpen(false)}>
+
+              <button
+                onClick={() => setMobileOpen(false)}
+              >
                 <X className="size-5 text-[#1A1A1A]" />
               </button>
             </div>
-            <nav className="flex-1 px-6 py-8 space-y-6 overflow-y-auto">
-              <Link to="/products" className="block text-[#1A1A1A] uppercase tracking-widest text-xs" style={{ letterSpacing: '0.15em' }}>
+
+            <nav className="flex-1 space-y-6 overflow-y-auto px-6 py-8">
+              <LinkItem href="/products">
                 Shop All
-              </Link>
+              </LinkItem>
+
               <div className="space-y-3">
-                <p className="text-[#9A9A9A] uppercase text-xs tracking-widest" style={{ letterSpacing: '0.15em' }}>Collections</p>
-                {COLLECTIONS.slice(1).map(col => (
+                <p className="text-xs uppercase tracking-[0.15em] text-[#9A9A9A]">
+                  Collections
+                </p>
+
+                {COLLECTIONS.slice(1).map((col) => (
                   <Link
                     key={col.id}
-                    to={`/products?collection=${col.id}`}
-                    className="block text-[#1A1A1A] text-sm pl-3"
+                    href={`/products?collection=${col.id}`}
+                    className="block pl-3 text-sm text-[#1A1A1A]"
                   >
                     {col.label}
                   </Link>
                 ))}
               </div>
-              <Link to="/wholesale" className="block text-[#1A1A1A] uppercase tracking-widest text-xs" style={{ letterSpacing: '0.15em' }}>
+
+              <LinkItem href="/wholesale">
                 Wholesale
-              </Link>
-              <Link to="/order-tracking" className="block text-[#1A1A1A] uppercase tracking-widest text-xs" style={{ letterSpacing: '0.15em' }}>
+              </LinkItem>
+
+              <LinkItem href="/order-tracking">
                 Track Order
-              </Link>
-              <Link to="/cart" className="block text-[#1A1A1A] uppercase tracking-widest text-xs" style={{ letterSpacing: '0.15em' }}>
+              </LinkItem>
+
+              <LinkItem href="/cart">
                 Cart {cartCount > 0 && `(${cartCount})`}
-              </Link>
-              <div className="pt-4 border-t border-[#E8E8E8]">
+              </LinkItem>
+
+              <div className="border-t border-[#E8E8E8] pt-4">
                 <LanguageSwitcher />
               </div>
             </nav>
-          </div>
+          </aside>
         </div>
       )}
     </>
+  );
+}
+
+function LinkItem({
+  href,
+  children,
+}: {
+  href: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <Link
+      href={href}
+      className="block text-xs uppercase tracking-[0.15em] text-[#1A1A1A]"
+    >
+      {children}
+    </Link>
   );
 }

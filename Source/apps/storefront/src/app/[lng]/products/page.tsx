@@ -1,3 +1,5 @@
+'use client'
+
 import { useState, useMemo, useEffect } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { AnimatePresence } from 'motion/react';
@@ -104,11 +106,10 @@ export default function ProductsPage() {
 
                   return params.toString();
                 }}
-                className={`px-4 py-1.5 text-xs uppercase tracking-widest border transition-colors ${
-                  activeCollection === col.id
-                    ? 'bg-[#1A1A1A] text-white border-[#1A1A1A]'
-                    : 'bg-white text-[#6A6A6A] border-[#E0E0E0] hover:border-[#1A1A1A] hover:text-[#1A1A1A]'
-                }`}
+                className={`px-4 py-1.5 text-xs uppercase tracking-widest border transition-colors ${activeCollection === col.id
+                  ? 'bg-[#1A1A1A] text-white border-[#1A1A1A]'
+                  : 'bg-white text-[#6A6A6A] border-[#E0E0E0] hover:border-[#1A1A1A] hover:text-[#1A1A1A]'
+                  }`}
                 style={{ letterSpacing: '0.1em' }}
               >
                 {col.label}

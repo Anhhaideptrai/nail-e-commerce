@@ -1,5 +1,8 @@
+'use client';
+
 import Link from 'next/link';
-import { motion } from 'motion/react';
+import { motion } from 'framer-motion';
+
 import { ImageWithFallback } from '../figma/ImageWithFallback';
 import { Product } from '@/MOCK_DATAS/products';
 
@@ -8,82 +11,176 @@ interface ProductCardProps {
   className?: string;
 }
 
-export function ProductCard({ product, className = '' }: ProductCardProps) {
-  const displayPrice = product.salePrice ?? product.price;
+export function ProductCard({
+  product,
+  className = '',
+}: ProductCardProps) {
+  const {
+    id,
+    name,
+    images,
+    collection,
+    price,
+    salePrice,
+    rating,
+    reviewCount,
+    isNew,
+    isBestSeller,
+    inStock,
+  } = product;
+
+  const displayPrice = salePrice ?? price;
+
+  const badges = [
+    isNew && {
+      label: 'New',
+      className: 'bg-black text-white',
+    },
+
+    isBestSeller && {
+      label: 'Best Seller',
+      className:
+        'bg-white text-black border border-[#E5E5E5]',
+    },
+
+    salePrice && {
+      label: 'Sale',
+      className: 'bg-[#C0C0C0] text-white',
+    },
+
+    !inStock && {
+      label: 'Sold Out',
+      className:
+        'bg-[#8A8A8A]/90 text-white',
+    },
+  ].filter(Boolean) as {
+    label: string;
+    className: string;
+  }[];
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 16 }}
+    <motion.article
+      initial={{ opacity: 0, y: 18 }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true }}
-      transition={{ duration: 0.5, ease: 'easeOut' }}
+      viewport={{ once: true, margin: '-40px' }}
+      transition={{
+        duration: 0.45,
+        ease: 'easeOut',
+      }}
       className={`group ${className}`}
     >
-      <Link href={`/products/${product.id}`} className="block">
+      <Link
+        href={`/products/${id}`}
+        className="block"
+        aria-label={name}
+      >
         {/* Image */}
-        <div className="relative overflow-hidden bg-[#F5F5F5] aspect-[3/4]">
+        <div className="relative aspect-[3/4] overflow-hidden bg-[#F5F5F5]">
           <ImageWithFallback
-            src={product.images[0]}
-            alt={product.name}
-            className="w-full h-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+            src={images?.[0] || ''}
+            alt={name}
+            className="h-full w-full object-cover transition-transform duration-700 ease-out group-hover:scale-105"
           />
-          {/* Badges */}
-          <div className="absolute top-3 left-3 flex flex-col gap-1.5">
-            {product.isNew && (
-              <span className="bg-[#1A1A1A] text-white text-[9px] uppercase tracking-widest px-2.5 py-1" style={{ letterSpacing: '0.12em' }}>
-                New
-              </span>
-            )}
-            {product.isBestSeller && (
-              <span className="bg-white text-[#1A1A1A] text-[9px] uppercase tracking-widest px-2.5 py-1 border border-[#E5E5E5]" style={{ letterSpacing: '0.12em' }}>
-                Best Seller
-              </span>
-            )}
-            {product.salePrice && (
-              <span className="bg-[#C0C0C0] text-white text-[9px] uppercase tracking-widest px-2.5 py-1" style={{ letterSpacing: '0.12em' }}>
-                Sale
-              </span>
-            )}
-            {!product.inStock && (
-              <span className="bg-[#9A9A9A]/80 text-white text-[9px] uppercase tracking-widest px-2.5 py-1" style={{ letterSpacing: '0.12em' }}>
-                Sold Out
-              </span>
-            )}
-          </div>
 
-          {/* Quick Shop overlay */}
-          <div className="absolute inset-x-0 bottom-0 bg-white/95 py-3 text-center text-[#1A1A1A] text-xs uppercase tracking-widest translate-y-full group-hover:translate-y-0 transition-transform duration-300" style={{ letterSpacing: '0.15em' }}>
+          {/* Badges */}
+          {!!badges.length && (
+            <div className="absolute left-3 top-3 flex flex-col gap-1.5">
+              {badges.map((badge) => (
+                <Badge
+                  key={badge.label}
+                  className={badge.className}
+                >
+                  {badge.label}
+                </Badge>
+              ))}
+            </div>
+          )}
+
+          {/* Quick View */}
+          <div className="absolute inset-x-0 bottom-0 translate-y-full bg-white/95 py-3 text-center text-[11px] uppercase tracking-[0.15em] text-[#1A1A1A] transition-transform duration-300 group-hover:translate-y-0">
             Quick View
           </div>
         </div>
 
-        {/* Info */}
-        <div className="pt-4 pb-2">
-          <p className="text-[#9A9A9A] text-xs uppercase tracking-widest mb-1" style={{ letterSpacing: '0.1em' }}>
-            {product.collection}
+        {/* Content */}
+        <div className="pb-2 pt-4">
+          <p className="mb-1 text-[11px] uppercase tracking-[0.1em] text-[#9A9A9A]">
+            {collection}
           </p>
-          <h3 className="text-[#1A1A1A] text-sm mb-2 group-hover:text-[#3A3A3A] transition-colors" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 500, fontSize: '1rem' }}>
-            {product.name}
+
+          <h3
+            className="mb-2 text-base text-[#1A1A1A] transition-colors group-hover:text-[#3A3A3A]"
+            style={{
+              fontFamily:
+                "'Cormorant Garamond', serif",
+              fontWeight: 500,
+            }}
+          >
+            {name}
           </h3>
+
+          {/* Price */}
           <div className="flex items-center gap-2">
-            <span className="text-[#1A1A1A] text-sm" style={{ fontWeight: product.salePrice ? 400 : 500 }}>
+            <span
+              className={`text-sm text-[#1A1A1A] ${salePrice
+                  ? 'font-normal'
+                  : 'font-medium'
+                }`}
+            >
               €{displayPrice.toFixed(2)}
             </span>
-            {product.salePrice && (
-              <span className="text-[#9A9A9A] text-sm line-through">€{product.price.toFixed(2)}</span>
+
+            {salePrice && (
+              <span className="text-sm text-[#9A9A9A] line-through">
+                €{price.toFixed(2)}
+              </span>
             )}
           </div>
+
           {/* Rating */}
-          <div className="flex items-center gap-1 mt-1.5">
-            <div className="flex">
-              {[1,2,3,4,5].map(star => (
-                <span key={star} className={`text-[10px] ${star <= Math.round(product.rating) ? 'text-[#C0C0C0]' : 'text-[#E5E5E5]'}`}>★</span>
-              ))}
+          <div className="mt-1.5 flex items-center gap-1">
+            <div
+              className="flex"
+              aria-label={`Rating ${rating} out of 5`}
+            >
+              {Array.from({ length: 5 }).map(
+                (_, index) => (
+                  <span
+                    key={index}
+                    className={`text-[10px] ${index <
+                        Math.round(rating)
+                        ? 'text-[#C0C0C0]'
+                        : 'text-[#E5E5E5]'
+                      }`}
+                  >
+                    ★
+                  </span>
+                )
+              )}
             </div>
-            <span className="text-[#9A9A9A] text-[10px]">({product.reviewCount})</span>
+
+            <span className="text-[10px] text-[#9A9A9A]">
+              ({reviewCount})
+            </span>
           </div>
         </div>
       </Link>
-    </motion.div>
+    </motion.article>
+  );
+}
+
+function Badge({
+  children,
+  className,
+}: {
+  children: React.ReactNode;
+  className?: string;
+}) {
+  return (
+    <span
+      className={`px-2.5 py-1 text-[9px] uppercase tracking-[0.12em] ${className}`}
+    >
+      {children}
+    </span>
   );
 }

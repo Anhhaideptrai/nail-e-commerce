@@ -1,55 +1,94 @@
+'use client';
+
 import { useState } from 'react';
-import { getT } from 'next-i18next/server';
 import { Globe } from 'lucide-react';
+import { useRouter, usePathname } from 'next/navigation';
 
 const languages = [
-  { code: 'en', name: 'English', flag: '🇬🇧' },
-  { code: 'fr', name: 'Français', flag: '🇫🇷' },
-  { code: 'de', name: 'Deutsch', flag: '🇩🇪' },
+  { code: 'en', name: 'English' },
+  { code: 'fr', name: 'Français' },
+  { code: 'de', name: 'Deutsch' },
 ];
 
-export async function LanguageSwitcher() {
-  const {  i18n } = await getT();
+export function LanguageSwitcher() {
+  const router = useRouter();
+  const pathname = usePathname();
+
   const [isOpen, setIsOpen] = useState(false);
 
-  const currentLanguage = languages.find(lang => lang.code === i18n.language) || languages[0];
+  const currentLocale =
+    pathname.split('/')[1] || 'en';
 
-  const handleLanguageChange = (langCode: string) => {
-    i18n.changeLanguage(langCode);
+  const currentLanguage =
+    languages.find(
+      (lang) => lang.code === currentLocale
+    ) || languages[0];
+
+  const handleLanguageChange = (
+    locale: string
+  ) => {
     setIsOpen(false);
+
+    const segments = pathname.split('/');
+
+    if (
+      languages.some(
+        (lang) => lang.code === segments[1]
+      )
+    ) {
+      segments[1] = locale;
+    } else {
+      segments.splice(1, 0, locale);
+    }
+
+    router.push(segments.join('/'));
   };
 
   return (
     <div className="relative">
       <button
-        onClick={() => setIsOpen(!isOpen)}
-        className="flex items-center gap-2 px-3 py-2 text-xs text-[#5A5A5A] hover:text-[#1A1A1A] transition-colors uppercase tracking-wider"
-        style={{ letterSpacing: '0.1em' }}
+        onClick={() =>
+          setIsOpen((prev) => !prev)
+        }
+        className="flex items-center gap-2 px-3 py-2 text-xs uppercase tracking-[0.1em] text-[#5A5A5A] transition-colors hover:text-[#1A1A1A]"
       >
         <Globe className="size-4" />
-        <span className="hidden md:inline">{currentLanguage.flag}</span>
-        <span className="hidden lg:inline">{currentLanguage.code.toUpperCase()}</span>
+
+        <span className="hidden lg:inline">
+          {currentLanguage.code.toUpperCase()}
+        </span>
       </button>
 
       {isOpen && (
         <>
-          <div
+          <button
+            aria-label="Close language menu"
             className="fixed inset-0 z-40"
             onClick={() => setIsOpen(false)}
           />
-          <div className="absolute right-0 top-full mt-2 bg-white border border-[#E0E0E0] shadow-lg z-50 min-w-[160px]">
-            {languages.map(lang => (
-              <button
-                key={lang.code}
-                onClick={() => handleLanguageChange(lang.code)}
-                className={`w-full flex items-center gap-3 px-4 py-2.5 text-sm hover:bg-[#F5F5F5] transition-colors ${
-                  lang.code === i18n.language ? 'bg-[#F5F5F5] text-[#1A1A1A]' : 'text-[#5A5A5A]'
-                }`}
-              >
-                <span className="text-lg">{lang.flag}</span>
-                <span>{lang.name}</span>
-              </button>
-            ))}
+
+          <div className="absolute right-0 top-full z-50 mt-2 min-w-[180px] overflow-hidden rounded-md border border-[#E5E5E5] bg-white shadow-lg">
+            {languages.map((lang) => {
+              const active =
+                lang.code === currentLocale;
+
+              return (
+                <button
+                  key={lang.code}
+                  onClick={() =>
+                    handleLanguageChange(
+                      lang.code
+                    )
+                  }
+                  className={`flex w-full items-center gap-3 px-4 py-3 text-sm transition-colors hover:bg-[#F5F5F5] ${active
+                    ? 'bg-[#F8F8F8] text-[#1A1A1A]'
+                    : 'text-[#5A5A5A]'
+                    }`}
+                >
+                  <span>{lang.name}</span>
+                </button>
+              );
+            })}
           </div>
         </>
       )}
