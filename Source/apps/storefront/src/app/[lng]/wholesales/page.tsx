@@ -86,7 +86,7 @@ export default function WholesalePage() {
               {
                 icon: Package,
                 title: 'Competitive Pricing',
-                desc: 'Tiered wholesale pricing starting at 30–50% below retail. Volume discounts available.',
+                desc: 'Tiered wholesale pricing starting at 30-50% below retail. Volume discounts available.',
               },
               {
                 icon: Globe,
@@ -130,7 +130,7 @@ export default function WholesalePage() {
               Thank you, {form.firstName}!
             </h2>
             <p className="text-[#6A6A6A] text-sm leading-relaxed max-w-sm mx-auto mb-8">
-              We've received your wholesale enquiry and will review your request within 2–3 business days.
+              We've received your wholesale enquiry and will review your request within 2-3 business days.
               Our partnership team will contact you at <strong>{form.email}</strong>.
             </p>
             <Link
@@ -211,7 +211,7 @@ export default function WholesalePage() {
                     className="w-full border border-[#E0E0E0] px-4 py-3 text-sm text-[#1A1A1A] bg-white outline-none focus:border-[#9A9A9A] transition-colors"
                   >
                     <option value="">Select range</option>
-                    {['1–10 sets', '11–30 sets', '31–100 sets', '101–500 sets', '500+ sets'].map(q => (
+                    {['1-10 sets', '11-30 sets', '31-100 sets', '101-500 sets', '500+ sets'].map(q => (
                       <option key={q} value={q}>{q}</option>
                     ))}
                   </select>
@@ -269,7 +269,7 @@ export default function WholesalePage() {
               )}
             </button>
             <p className="text-[#9A9A9A] text-xs text-center">
-              We typically respond within 2–3 business days. For urgent enquiries, email us at wholesale@lunellenails.com
+              We typically respond within 2-3 business days. For urgent enquiries, email us at wholesale@lunellenails.com
             </p>
           </form>
         )}

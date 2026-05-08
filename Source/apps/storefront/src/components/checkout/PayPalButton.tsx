@@ -23,7 +23,7 @@ export function PayPalButton({ amount, orderId, onSuccess, onError }: PayPalButt
     // Load PayPal SDK script
     if (!window.paypal && !document.querySelector('script[src*="paypal"]')) {
       const script = document.createElement('script');
-      script.src = `https://www.paypal.com/sdk/js?client-id=${process.env.VITE_PAYPAL_CLIENT_ID || 'sandbox'}&currency=EUR`;
+      script.src = `https://www.paypal.com/sdk/js?client-id=${process.env.VITE_PAYPAL_CLIENT_ID || 'sandbox'}&currency=USD`;
       script.async = true;
       script.onload = () => {
         setScriptLoaded(true);

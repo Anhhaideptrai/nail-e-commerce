@@ -6,7 +6,15 @@ import { useParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronRight, CreditCard, Shield, ArrowLeft, Check } from 'lucide-react';
 import { ImageWithFallback } from '@/components/figma/ImageWithFallback';
-import { useCart, MockOrder } from '@/context/CartContext';
+import { useCart } from '@/context/CartContext';
+import {
+  ContactDetails,
+  PaymentMethod,
+  ShippingDetails,
+  createMockOrder,
+  generateOrderId,
+  getShippingCost,
+} from '@/features/checkout/checkout.utils';
 
 type Step = 'contact' | 'shipping' | 'payment' | 'confirmation';
 
@@ -56,41 +64,29 @@ export default function CheckoutPage() {
   const [orderId, setOrderId] = useState('');
   const [checkoutType, setCheckoutType] = useState<'guest' | 'registered'>('guest');
 
-  const [contact, setContact] = useState({ email: '', phone: '', createAccount: false, password: '' });
-  const [shipping, setShipping] = useState({ firstName: '', lastName: '', address: '', apartment: '', city: '', postalCode: '', country: 'Germany', notes: '' });
-  const [payment, setPayment] = useState<'paypal' | 'card'>('card');
+  const [contact, setContact] = useState<ContactDetails>({ email: '', phone: '', createAccount: false, password: '' });
+  const [shipping, setShipping] = useState<ShippingDetails>({ firstName: '', lastName: '', address: '', apartment: '', city: '', postalCode: '', country: 'Germany', notes: '' });
+  const [payment, setPayment] = useState<PaymentMethod>('card');
   const [card, setCard] = useState({ number: '', name: '', expiry: '', cvc: '' });
 
-  const shipping_cost = subtotal >= 50 ? 0 : 9.99;
+  const shipping_cost = getShippingCost(subtotal);
   const finalTotal = total + shipping_cost;
-
-  const generateOrderId = () => 'LNL-' + Date.now().toString(36).toUpperCase() + '-' + Math.random().toString(36).substring(2, 6).toUpperCase();
 
   const handlePayment = async () => {
     setIsProcessing(true);
     await new Promise(r => setTimeout(r, 2000));
     const id = generateOrderId();
     setOrderId(id);
-    const order: MockOrder = {
+    const order = createMockOrder({
       id,
-      phone: contact.phone,
-      email: contact.email,
+      contact,
+      shipping,
+      payment,
       items: state.items,
       subtotal,
       discount: discountAmount,
       total: finalTotal,
-      status: 'Processing',
-      createdAt: new Date().toISOString(),
-      shippingAddress: {
-        firstName: shipping.firstName,
-        lastName: shipping.lastName,
-        address: shipping.address,
-        city: shipping.city,
-        postalCode: shipping.postalCode,
-        country: shipping.country,
-      },
-      paymentMethod: payment === 'card' ? 'Visa/Mastercard' : 'PayPal',
-    };
+    });
     addOrder(order);
     dispatch({ type: 'CLEAR_CART' });
     setIsProcessing(false);
@@ -131,7 +127,7 @@ export default function CheckoutPage() {
         <div className="grid grid-cols-1 lg:grid-cols-[1fr_400px] gap-10">
           {/* Main Form */}
           <div>
-            {/* ── CONTACT ── */}
+            {/* Contact */}
             <AnimatePresence mode="wait">
               {step === 'contact' && (
                 <motion.div key="contact" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.3 }}>
@@ -192,7 +188,7 @@ export default function CheckoutPage() {
                 </motion.div>
               )}
 
-              {/* ── SHIPPING ── */}
+              {/* Shipping */}
               {step === 'shipping' && (
                 <motion.div key="shipping" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.3 }}>
                   <div className="bg-white p-6 sm:p-8">
@@ -252,7 +248,7 @@ export default function CheckoutPage() {
                 </motion.div>
               )}
 
-              {/* ── PAYMENT ── */}
+              {/* Payment */}
               {step === 'payment' && (
                 <motion.div key="payment" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }} transition={{ duration: 0.3 }}>
                   <div className="bg-white p-6 sm:p-8">
@@ -323,7 +319,7 @@ export default function CheckoutPage() {
                       ) : (
                         <>
                           <CreditCard className="size-4" />
-                          Pay €{finalTotal.toFixed(2)}
+                          Pay ${finalTotal.toFixed(2)}
                         </>
                       )}
                     </button>
@@ -331,7 +327,7 @@ export default function CheckoutPage() {
                 </motion.div>
               )}
 
-              {/* ── CONFIRMATION ── */}
+              {/* Confirmation */}
               {step === 'confirmation' && (
                 <motion.div key="confirmation" initial={{ opacity: 0, scale: 0.98 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5 }}>
                   <div className="bg-white p-8 sm:p-12 text-center">
@@ -399,10 +395,10 @@ export default function CheckoutPage() {
                       </div>
                       <div className="flex-1 min-w-0">
                         <p className="text-[#1A1A1A] text-xs truncate">{item.product.name}</p>
-                        <p className="text-[#9A9A9A] text-[10px]">{item.size} · {item.shape}</p>
+                        <p className="text-[#9A9A9A] text-[10px]">{item.size} / {item.shape}</p>
                       </div>
                       <p className="text-[#1A1A1A] text-xs flex-shrink-0">
-                        €{((item.product.salePrice ?? item.product.price) * item.quantity).toFixed(2)}
+                        ${((item.product.salePrice ?? item.product.price) * item.quantity).toFixed(2)}
                       </p>
                     </div>
                   ))}
@@ -410,21 +406,21 @@ export default function CheckoutPage() {
 
                 <div className="border-t border-[#F0F0F0] pt-4 space-y-2">
                   <div className="flex justify-between text-xs text-[#6A6A6A]">
-                    <span>Subtotal</span><span>€{subtotal.toFixed(2)}</span>
+                    <span>Subtotal</span><span>${subtotal.toFixed(2)}</span>
                   </div>
                   {discountAmount > 0 && (
                     <div className="flex justify-between text-xs">
                       <span className="text-[#6A6A6A]">Discount</span>
-                      <span className="text-[#4A7A5A]">−€{discountAmount.toFixed(2)}</span>
+                      <span className="text-[#4A7A5A]">-${discountAmount.toFixed(2)}</span>
                     </div>
                   )}
                   <div className="flex justify-between text-xs text-[#6A6A6A]">
-                    <span>Shipping</span><span>{shipping_cost === 0 ? 'Free' : `€${shipping_cost.toFixed(2)}`}</span>
+                    <span>Shipping</span><span>{shipping_cost === 0 ? 'Free' : `$${shipping_cost.toFixed(2)}`}</span>
                   </div>
                   <div className="flex justify-between pt-2 border-t border-[#F0F0F0]">
                     <span className="text-[#1A1A1A] text-xs uppercase tracking-widest" style={{ letterSpacing: '0.1em' }}>Total</span>
                     <span className="text-[#1A1A1A]" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 500, fontSize: '1.1rem' }}>
-                      €{finalTotal.toFixed(2)}
+                      ${finalTotal.toFixed(2)}
                     </span>
                   </div>
                 </div>

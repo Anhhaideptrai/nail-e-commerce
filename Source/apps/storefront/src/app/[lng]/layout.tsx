@@ -2,6 +2,8 @@ import { dir } from 'i18next'
 import { initServerI18next, getT, getResources, generateI18nStaticParams } from 'next-i18next/server'
 import { I18nProvider } from 'next-i18next/client'
 import { CartProvider } from '../../context/CartContext'
+import { Footer } from '../../components/layout/Footer'
+import { Navbar } from '../../components/layout/Navbar'
 import i18nConfig from '../../i18n.config'
 import '../../styles/index.css'
 
@@ -35,7 +37,11 @@ export default async function RootLayout({
       <head />
       <body>
         <I18nProvider language={lng} resources={resources}>
-          <CartProvider>{children}</CartProvider>
+          <CartProvider>
+            <Navbar />
+            {children}
+            <Footer />
+          </CartProvider>
         </I18nProvider>
       </body>
     </html>

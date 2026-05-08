@@ -95,7 +95,7 @@ export function StripePaymentForm({ amount, onSuccess, onError }: StripePaymentF
         ) : (
           <>
             <CreditCard className="size-4" />
-            Pay €{amount.toFixed(2)}
+            Pay ${amount.toFixed(2)}
           </>
         )}
       </button>

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import {  useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { Minus, Plus, X, ArrowRight, Tag, ShoppingBag } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
@@ -11,6 +11,9 @@ import { useCart } from '@/context/CartContext';
 export default function CartPage() {
   const { state, dispatch, cartCount, subtotal, discountAmount, total, applyDiscount } = useCart();
   const router = useRouter();
+  const params = useParams<{ lng?: string }>();
+  const lng = params.lng ?? 'en';
+  const localizedHref = (href: string) => `/${lng}${href}`;
   const [discountInput, setDiscountInput] = useState('');
   const [discountError, setDiscountError] = useState('');
   const [discountSuccess, setDiscountSuccess] = useState('');
@@ -40,7 +43,7 @@ export default function CartPage() {
           </h1>
           <p className="text-[#8A8A8A] text-sm mb-8">Discover our luxury press-on nail collections.</p>
           <Link
-            href="/products"
+            href={localizedHref('/products')}
             className="inline-flex items-center gap-2 bg-[#1A1A1A] text-white px-8 py-4 text-xs uppercase tracking-widest hover:bg-[#333] transition-colors"
             style={{ letterSpacing: '0.15em' }}
           >
@@ -66,7 +69,7 @@ export default function CartPage() {
         {needsForFreeShipping > 0 && (
           <div className="bg-[#F8F8F8] border border-[#E8E8E8] px-5 py-4 mb-8">
             <p className="text-[#5A5A5A] text-xs text-center">
-              Add <strong>€{needsForFreeShipping.toFixed(2)}</strong> more to your bag for <strong>free shipping</strong>
+              Add <strong>${needsForFreeShipping.toFixed(2)}</strong> more to your bag for <strong>free shipping</strong>
             </p>
             <div className="mt-3 h-0.5 bg-[#E0E0E0] rounded-full overflow-hidden">
               <div
@@ -78,7 +81,7 @@ export default function CartPage() {
         )}
         {needsForFreeShipping === 0 && (
           <div className="bg-[#F5F5F5] border border-[#E8E8E8] px-5 py-3 mb-8 text-center">
-            <p className="text-[#4A7A5A] text-xs">✓ You qualify for free shipping!</p>
+            <p className="text-[#4A7A5A] text-xs">You qualify for free shipping!</p>
           </div>
         )}
 
@@ -114,11 +117,11 @@ export default function CartPage() {
                         />
                       </div>
                       <div className="min-w-0">
-                        <Link href={`/products/${item.product.id}`} className="text-[#1A1A1A] hover:opacity-70 transition-opacity" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 500, fontSize: '1rem' }}>
+                        <Link href={localizedHref(`/products/${item.product.id}`)} className="text-[#1A1A1A] hover:opacity-70 transition-opacity" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 500, fontSize: '1rem' }}>
                           {item.product.name}
                         </Link>
-                        <p className="text-[#9A9A9A] text-xs mt-1">{item.size} · {item.shape} · {item.length}</p>
-                        <p className="text-[#1A1A1A] text-sm mt-2 sm:hidden">€{(price * item.quantity).toFixed(2)}</p>
+                        <p className="text-[#9A9A9A] text-xs mt-1">{item.size} / {item.shape} / {item.length}</p>
+                        <p className="text-[#1A1A1A] text-sm mt-2 sm:hidden">${(price * item.quantity).toFixed(2)}</p>
                       </div>
                     </div>
 
@@ -143,7 +146,7 @@ export default function CartPage() {
 
                     {/* Price */}
                     <div className="hidden sm:block text-right text-[#1A1A1A] text-sm">
-                      €{(price * item.quantity).toFixed(2)}
+                      ${(price * item.quantity).toFixed(2)}
                     </div>
 
                     {/* Remove */}
@@ -169,12 +172,12 @@ export default function CartPage() {
               <div className="space-y-3 mb-6">
                 <div className="flex justify-between text-sm">
                   <span className="text-[#6A6A6A]">Subtotal</span>
-                  <span className="text-[#1A1A1A]">€{subtotal.toFixed(2)}</span>
+                  <span className="text-[#1A1A1A]">${subtotal.toFixed(2)}</span>
                 </div>
                 {discountAmount > 0 && (
                   <div className="flex justify-between text-sm">
                     <span className="text-[#6A6A6A]">Discount ({state.discountCode})</span>
-                    <span className="text-[#4A7A5A]">−€{discountAmount.toFixed(2)}</span>
+                    <span className="text-[#4A7A5A]">-${discountAmount.toFixed(2)}</span>
                   </div>
                 )}
                 <div className="flex justify-between text-sm">
@@ -184,7 +187,7 @@ export default function CartPage() {
                 <div className="border-t border-[#E0E0E0] pt-3 flex justify-between">
                   <span className="text-[#1A1A1A] text-sm uppercase tracking-widest" style={{ letterSpacing: '0.1em' }}>Total</span>
                   <span className="text-[#1A1A1A]" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 500, fontSize: '1.2rem' }}>
-                    €{total.toFixed(2)}
+                    ${total.toFixed(2)}
                   </span>
                 </div>
               </div>
@@ -216,7 +219,7 @@ export default function CartPage() {
                 </div>
               ) : (
                 <div className="mb-6 flex items-center justify-between bg-white border border-[#4A7A5A]/30 px-4 py-3">
-                  <span className="text-[#4A7A5A] text-xs">✓ {state.discountCode} applied</span>
+                  <span className="text-[#4A7A5A] text-xs">{state.discountCode} applied</span>
                   <button
                     onClick={() => { dispatch({ type: 'REMOVE_DISCOUNT' }); setDiscountSuccess(''); }}
                     className="text-[#9A9A9A] hover:text-[#1A1A1A]"
@@ -227,7 +230,7 @@ export default function CartPage() {
               )}
 
               <button
-                onClick={() => router.push('/checkout')}
+                onClick={() => router.push(localizedHref('/checkout'))}
                 className="w-full bg-[#1A1A1A] text-white py-4 text-xs uppercase tracking-widest hover:bg-[#333] transition-colors flex items-center justify-center gap-2"
                 style={{ letterSpacing: '0.15em' }}
               >

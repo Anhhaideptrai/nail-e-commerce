@@ -193,7 +193,7 @@ export default function OrderTrackingPage() {
                     )}
                     <div className="border-t border-[#E0E0E0] pt-2 mt-2 flex justify-between">
                       <span className="text-[#6A6A6A] text-xs">Total</span>
-                      <span className="text-[#1A1A1A] text-xs">€{result.total.toFixed(2)}</span>
+                      <span className="text-[#1A1A1A] text-xs">${result.total.toFixed(2)}</span>
                     </div>
                   </div>
                 </div>

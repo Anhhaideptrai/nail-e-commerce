@@ -1,6 +1,6 @@
 {
   "common": {
-    "currency": "€",
+    "currency": "$",
     "addToBag": "Ajouter au Panier",
     "continueShopping": "Continuer les Achats",
     "viewBag": "Voir le Panier et Commander",
@@ -23,7 +23,7 @@
     "shop": "Boutique",
     "collections": "Collections",
     "wholesale": "Grossiste",
-    "about": "À Propos",
+    "about": "A Propos",
     "contact": "Contact",
     "cart": "Panier",
     "trackOrder": "Suivre Commande"
@@ -127,7 +127,7 @@
     "save": "Enregistrer les Modifications"
   },
   "trust": {
-    "freeShipping": "Livraison gratuite dès 50€",
+    "freeShipping": "Livraison gratuite dès 50$",
     "returns": "Retours sous 14 jours",
     "handmade": "Fait main avec soin"
   }

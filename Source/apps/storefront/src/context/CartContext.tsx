@@ -1,7 +1,17 @@
 'use client';
 
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
-import { Product, DISCOUNT_CODES } from '../MOCK_DATAS/products';
+import { Product } from '../MOCK_DATAS/products';
+import {
+  addStoredOrder,
+  findStoredOrder,
+  getCartItemCount,
+  getCartSubtotal,
+  getDiscountRate,
+  readCartState,
+  removeCartItem,
+  writeCartState,
+} from './cart.utils';
 
 export interface CartItem {
   product: Product;
@@ -32,7 +42,7 @@ export interface MockOrder {
   paymentMethod: string;
 }
 
-interface CartState {
+export interface CartState {
   items: CartItem[];
   discountCode: string | null;
   discountRate: number;
@@ -72,29 +82,13 @@ function cartReducer(state: CartState, action: CartAction): CartState {
     case 'REMOVE_ITEM':
       return {
         ...state,
-        items: state.items.filter(
-          i =>
-            !(
-              i.product.id === action.payload.productId &&
-              i.size === action.payload.size &&
-              i.shape === action.payload.shape &&
-              i.length === action.payload.length
-            )
-        ),
+        items: removeCartItem(state.items, action.payload),
       };
     case 'UPDATE_QUANTITY': {
       if (action.payload.quantity <= 0) {
         return {
           ...state,
-          items: state.items.filter(
-            i =>
-              !(
-                i.product.id === action.payload.productId &&
-                i.size === action.payload.size &&
-                i.shape === action.payload.shape &&
-                i.length === action.payload.length
-              )
-          ),
+          items: removeCartItem(state.items, action.payload),
         };
       }
       return {
@@ -135,72 +129,43 @@ interface CartContextValue {
 const CartContext = createContext<CartContextValue | null>(null);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  const [state, dispatch] = useReducer(cartReducer, initialState, () => {
-    if (typeof window === 'undefined') {
-      return initialState;
-    }
-
-    try {
-      const saved = localStorage.getItem('lunelle_cart');
-      return saved ? JSON.parse(saved) : initialState;
-    } catch {
-      return initialState;
-    }
-  });
+  const [state, dispatch] = useReducer(cartReducer, initialState, readCartState);
 
   useEffect(() => {
-    if (typeof window === 'undefined') {
-      return;
-    }
-
-    localStorage.setItem('lunelle_cart', JSON.stringify(state));
+    writeCartState(state);
   }, [state]);
 
-  const cartCount = state.items.reduce((sum, i) => sum + i.quantity, 0);
-  const subtotal = state.items.reduce((sum, i) => {
-    const price = i.product.salePrice ?? i.product.price;
-    return sum + price * i.quantity;
-  }, 0);
+  const cartCount = getCartItemCount(state.items);
+  const subtotal = getCartSubtotal(state.items);
   const discountAmount = subtotal * state.discountRate;
   const total = subtotal - discountAmount;
 
   const applyDiscount = (code: string): boolean => {
     const upper = code.toUpperCase();
-    if (DISCOUNT_CODES[upper]) {
-      dispatch({ type: 'APPLY_DISCOUNT', payload: { code: upper, rate: DISCOUNT_CODES[upper] } });
+    const rate = getDiscountRate(upper);
+
+    if (rate) {
+      dispatch({ type: 'APPLY_DISCOUNT', payload: { code: upper, rate } });
       return true;
     }
+
     return false;
   };
 
-  const addOrder = (order: MockOrder) => {
-    if (typeof window === 'undefined') {
-      return;
-    }
-
-    try {
-      const existing = JSON.parse(localStorage.getItem('lunelle_orders') || '[]');
-      localStorage.setItem('lunelle_orders', JSON.stringify([...existing, order]));
-    } catch {
-      return;
-    }
-  };
-
-  const getOrder = (orderId: string, phone: string): MockOrder | null => {
-    if (typeof window === 'undefined') {
-      return null;
-    }
-
-    try {
-      const orders: MockOrder[] = JSON.parse(localStorage.getItem('lunelle_orders') || '[]');
-      return orders.find(o => o.id === orderId && o.phone === phone) || null;
-    } catch {
-      return null;
-    }
-  };
-
   return (
-    <CartContext.Provider value={{ state, dispatch, cartCount, subtotal, discountAmount, total, applyDiscount, addOrder, getOrder }}>
+    <CartContext.Provider
+      value={{
+        state,
+        dispatch,
+        cartCount,
+        subtotal,
+        discountAmount,
+        total,
+        applyDiscount,
+        addOrder: addStoredOrder,
+        getOrder: findStoredOrder,
+      }}
+    >
       {children}
     </CartContext.Provider>
   );

@@ -72,10 +72,10 @@ export function ProductCard({ product, className = '' }: ProductCardProps) {
           </h3>
           <div className="flex items-center gap-2">
             <span className="text-[#1A1A1A] text-sm" style={{ fontWeight: product.salePrice ? 400 : 500 }}>
-              €{displayPrice.toFixed(2)}
+              ${displayPrice.toFixed(2)}
             </span>
             {product.salePrice && (
-              <span className="text-[#9A9A9A] text-sm line-through">€{product.price.toFixed(2)}</span>
+              <span className="text-[#9A9A9A] text-sm line-through">${product.price.toFixed(2)}</span>
             )}
           </div>
           {/* Rating */}

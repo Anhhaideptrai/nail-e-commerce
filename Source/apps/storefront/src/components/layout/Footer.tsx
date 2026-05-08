@@ -141,7 +141,7 @@ export function Footer() {
             </ul>
             <div className="flex items-start gap-2 text-[#6A6A6A] text-xs">
               <MapPin className="size-3 mt-0.5 flex-shrink-0" />
-              <span>Ships worldwide from Vietnam<br />EU delivery 7–14 business days</span>
+              <span>Ships worldwide from Vietnam<br />EU delivery 7-14 business days</span>
             </div>
           </div>
         </div>

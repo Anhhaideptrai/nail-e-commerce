@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useMemo, useEffect } from 'react';
-import { useSearchParams } from 'next/navigation';
+import { useParams, usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { AnimatePresence } from 'motion/react';
 import { Search, SlidersHorizontal, X, ChevronDown } from 'lucide-react';
 import { ProductCard } from '@/components/shared/ProductCard';
@@ -17,21 +17,47 @@ const sortOptions: { value: SortOption; label: string }[] = [
   { value: 'price-desc', label: 'Price: High to Low' },
 ];
 
+const getSortFromParams = (searchParams: URLSearchParams): SortOption => {
+  const sort = searchParams.get('sort');
+  const legacyFilter = searchParams.get('filter');
+
+  if (sort === 'price-asc' || sort === 'price-desc' || sort === 'newest' || sort === 'bestseller') {
+    return sort;
+  }
+
+  if (legacyFilter === 'new') {
+    return 'newest';
+  }
+
+  if (legacyFilter === 'bestseller') {
+    return 'bestseller';
+  }
+
+  return 'featured';
+};
+
 export default function ProductsPage() {
-  const searchParams = useSearchParams()
+  const router = useRouter();
+  const pathname = usePathname();
+  const routeParams = useParams<{ lng?: string }>();
+  const searchParams = useSearchParams();
   const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
   const [activeCollection, setActiveCollection] = useState(searchParams.get('collection') || 'all');
-  const [sortBy, setSortBy] = useState<SortOption>(searchParams.get('filter') === 'new' ? 'newest' : searchParams.get('filter') === 'bestseller' ? 'bestseller' : 'featured');
+  const [sortBy, setSortBy] = useState<SortOption>(() => getSortFromParams(searchParams));
   const [sortOpen, setSortOpen] = useState(false);
+  const lng = routeParams.lng ?? 'en';
+
+  const pushProductQuery = (nextParams: URLSearchParams) => {
+    const query = nextParams.toString();
+    router.push(query ? `/${lng}/products?${query}` : `/${lng}/products`);
+  };
 
   useEffect(() => {
     const col = searchParams.get('collection');
-    if (col) setActiveCollection(col);
+    setActiveCollection(col || 'all');
     const search = searchParams.get('search');
-    if (search) setSearchQuery(search);
-    const filter = searchParams.get('filter');
-    if (filter === 'new') setSortBy('newest');
-    if (filter === 'bestseller') setSortBy('bestseller');
+    setSearchQuery(search || '');
+    setSortBy(getSortFromParams(searchParams));
   }, [searchParams]);
 
   const filtered = useMemo(() => {
@@ -104,7 +130,7 @@ export default function ProductsPage() {
                     params.set('collection', col.id);
                   }
 
-                  return params.toString();
+                  pushProductQuery(params);
                 }}
                 className={`px-4 py-1.5 text-xs uppercase tracking-widest border transition-colors ${
                   activeCollection === col.id
@@ -125,12 +151,33 @@ export default function ProductsPage() {
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-3.5 text-[#9A9A9A]" />
               <input
                 value={searchQuery}
-                onChange={e => setSearchQuery(e.target.value)}
+                onChange={e => {
+                  const nextSearch = e.target.value;
+                  const params = new URLSearchParams(searchParams.toString());
+
+                  setSearchQuery(nextSearch);
+
+                  if (nextSearch.trim()) {
+                    params.set('search', nextSearch);
+                  } else {
+                    params.delete('search');
+                  }
+
+                  pushProductQuery(params);
+                }}
                 placeholder="Search..."
                 className="pl-8 pr-3 py-2 text-xs border border-[#E0E0E0] bg-white text-[#1A1A1A] placeholder:text-[#9A9A9A] outline-none focus:border-[#C0C0C0] transition-colors w-40 md:w-52"
               />
               {searchQuery && (
-                <button className="absolute right-2 top-1/2 -translate-y-1/2" onClick={() => setSearchQuery('')}>
+                <button
+                  className="absolute right-2 top-1/2 -translate-y-1/2"
+                  onClick={() => {
+                    const params = new URLSearchParams(searchParams.toString());
+                    params.delete('search');
+                    setSearchQuery('');
+                    pushProductQuery(params);
+                  }}
+                >
                   <X className="size-3 text-[#9A9A9A]" />
                 </button>
               )}
@@ -152,7 +199,22 @@ export default function ProductsPage() {
                   {sortOptions.map(opt => (
                     <button
                       key={opt.value}
-                      onClick={() => { setSortBy(opt.value); setSortOpen(false); }}
+                      onClick={() => {
+                        const params = new URLSearchParams(searchParams.toString());
+
+                        setSortBy(opt.value);
+                        setSortOpen(false);
+
+                        params.delete('filter');
+
+                        if (opt.value === 'featured') {
+                          params.delete('sort');
+                        } else {
+                          params.set('sort', opt.value);
+                        }
+
+                        pushProductQuery(params);
+                      }}
                       className={`block w-full text-left px-4 py-2.5 text-xs uppercase tracking-widest hover:bg-[#F5F5F5] transition-colors ${sortBy === opt.value ? 'text-[#1A1A1A]' : 'text-[#6A6A6A]'}`}
                       style={{ letterSpacing: '0.1em' }}
                     >
@@ -173,7 +235,11 @@ export default function ProductsPage() {
           <div className="text-center py-24">
             <p className="text-[#9A9A9A] text-sm mb-2">No products found</p>
             <button
-              onClick={() => { setSearchQuery(''); setActiveCollection('all'); }}
+              onClick={() => {
+                setSearchQuery('');
+                setActiveCollection('all');
+                router.push(pathname);
+              }}
               className="text-[#1A1A1A] text-xs uppercase tracking-widest underline"
             >
               Clear filters

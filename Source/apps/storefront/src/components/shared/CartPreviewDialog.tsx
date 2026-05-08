@@ -46,14 +46,14 @@ export function CartPreviewDialog({ open, onOpenChange, addedItem, cartCount, su
             <p className="text-[#9A9A9A] text-xs mb-2">{addedItem.product.collection}</p>
             <div className="flex flex-wrap gap-2 text-xs text-[#5A5A5A]">
               <span>Size: {addedItem.size}</span>
-              <span>·</span>
+              <span>/</span>
               <span>Shape: {addedItem.shape}</span>
-              <span>·</span>
+              <span>/</span>
               <span>Length: {addedItem.length}</span>
             </div>
             <div className="flex items-center gap-3 mt-2">
               <span className="text-[#1A1A1A] text-sm" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 500 }}>
-                €{displayPrice.toFixed(2)}
+                ${displayPrice.toFixed(2)}
               </span>
               <span className="text-[#9A9A9A] text-xs">Qty: {addedItem.quantity}</span>
             </div>
@@ -65,7 +65,7 @@ export function CartPreviewDialog({ open, onOpenChange, addedItem, cartCount, su
           <div className="flex items-center justify-between text-sm mb-1">
             <span className="text-[#5A5A5A]">Cart Total ({cartCount} {cartCount === 1 ? 'item' : 'items'})</span>
             <span className="text-[#1A1A1A]" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 500, fontSize: '1.1rem' }}>
-              €{subtotal.toFixed(2)}
+              ${subtotal.toFixed(2)}
             </span>
           </div>
           <p className="text-[#9A9A9A] text-xs">Shipping calculated at checkout</p>

@@ -1,6 +1,6 @@
 {
   "common": {
-    "currency": "€",
+    "currency": "$",
     "addToBag": "Add to Bag",
     "continueShopping": "Continue Shopping",
     "viewBag": "View Bag & Checkout",
@@ -127,7 +127,7 @@
     "save": "Save Changes"
   },
   "trust": {
-    "freeShipping": "Free shipping over €50",
+    "freeShipping": "Free shipping over $50",
     "returns": "14-day returns",
     "handmade": "Handmade with care"
   }

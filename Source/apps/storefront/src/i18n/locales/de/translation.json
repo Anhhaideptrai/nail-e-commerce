@@ -1,6 +1,6 @@
 {
   "common": {
-    "currency": "€",
+    "currency": "$",
     "addToBag": "In den Warenkorb",
     "continueShopping": "Weiter Einkaufen",
     "viewBag": "Warenkorb Ansehen & Zur Kasse",
@@ -127,7 +127,7 @@
     "save": "Änderungen Speichern"
   },
   "trust": {
-    "freeShipping": "Kostenloser Versand ab 50€",
+    "freeShipping": "Kostenloser Versand ab 50$",
     "returns": "14-Tage Rückgaberecht",
     "handmade": "Handgefertigt mit Sorgfalt"
   }

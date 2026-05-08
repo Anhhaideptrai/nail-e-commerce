@@ -92,9 +92,9 @@ export default function ProductDetailPage() {
               <tbody className="divide-y divide-[#F0F0F0]">
                 {[
                   ['XS', '< 13mm', 'Very small'],
-                  ['S', '13–15mm', 'Small'],
-                  ['M', '15–17mm', 'Medium'],
-                  ['L', '17–19mm', 'Large'],
+                  ['S', '13-15mm', 'Small'],
+                  ['M', '15-17mm', 'Medium'],
+                  ['L', '17-19mm', 'Large'],
                   ['XL', '> 19mm', 'Extra large'],
                   ['Custom', 'Your measurements', 'Any size'],
                 ].map(([size, width, hand]) => (
@@ -116,11 +116,11 @@ export default function ProductDetailPage() {
       title: 'Shipping & Returns',
       content: (
         <div className="text-sm text-[#5A5A5A] space-y-2 leading-relaxed">
-          <p>🌍 <strong className="text-[#1A1A1A]">Worldwide Shipping</strong> – We ship to 60+ countries including all EU member states.</p>
-          <p>⏱ <strong className="text-[#1A1A1A]">Delivery Time</strong> – EU: 7–14 business days | USA/UK: 10–18 business days</p>
-          <p>📦 <strong className="text-[#1A1A1A]">Free Shipping</strong> – On all orders over €50</p>
-          <p>✅ <strong className="text-[#1A1A1A]">Returns</strong> – Unopened items accepted within 14 days of delivery. Custom orders are non-refundable.</p>
-          <p>🔄 <strong className="text-[#1A1A1A]">Exchange Policy</strong> – Size exchanges accepted within 7 days. Please contact us to arrange.</p>
+          <p><strong className="text-[#1A1A1A]">Worldwide Shipping</strong> - We ship to 60+ countries including all EU member states.</p>
+          <p><strong className="text-[#1A1A1A]">Delivery Time</strong> - EU: 7-14 business days | USA/UK: 10-18 business days</p>
+          <p><strong className="text-[#1A1A1A]">Free Shipping</strong> - On all orders over $50</p>
+          <p><strong className="text-[#1A1A1A]">Returns</strong> - Unopened items accepted within 14 days of delivery. Custom orders are non-refundable.</p>
+          <p><strong className="text-[#1A1A1A]">Exchange Policy</strong> - Size exchanges accepted within 7 days. Please contact us to arrange.</p>
         </div>
       ),
     },
@@ -197,13 +197,13 @@ export default function ProductDetailPage() {
             {/* Price */}
             <div className="flex items-center gap-3 mb-8">
               <span className="text-[#1A1A1A]" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 500, fontSize: '1.6rem' }}>
-                €{displayPrice.toFixed(2)}
+                ${displayPrice.toFixed(2)}
               </span>
               {product.salePrice && (
                 <>
-                  <span className="text-[#9A9A9A] line-through" style={{ fontSize: '1.1rem' }}>€{product.price.toFixed(2)}</span>
+                  <span className="text-[#9A9A9A] line-through" style={{ fontSize: '1.1rem' }}>${product.price.toFixed(2)}</span>
                   <span className="bg-[#F0F0F0] text-[#6A6A6A] text-xs px-2 py-0.5 uppercase tracking-wider">
-                    Save €{(product.price - product.salePrice).toFixed(2)}
+                    Save ${(product.price - product.salePrice).toFixed(2)}
                   </span>
                 </>
               )}
@@ -322,7 +322,7 @@ export default function ProductDetailPage() {
             {/* Trust badges */}
             <div className="grid grid-cols-3 gap-3 py-5 border-y border-[#F0F0F0] mb-8">
               {[
-                { icon: Truck, label: 'Free shipping over €50' },
+                { icon: Truck, label: 'Free shipping over $50' },
                 { icon: RotateCcw, label: '14-day returns' },
                 { icon: Package, label: 'Handmade with care' },
               ].map(({ icon: Icon, label }) => (
