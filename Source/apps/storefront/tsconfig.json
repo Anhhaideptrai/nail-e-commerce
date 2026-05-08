@@ -17,11 +17,13 @@
       }
     ],
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@source/api-client": ["../../libs/api-client/src/index.ts"],
+      "@source/types": ["../../libs/types/src/index.ts"],
+      "@source/ui": ["../../libs/ui/src/index.ts"]
     },
     "types": ["jest", "node"],
     "outDir": "dist",
-    "rootDir": "src",
     "tsBuildInfoFile": "dist/tsconfig.tsbuildinfo"
   },
   "include": [
@@ -47,6 +49,9 @@
     "eslint.config.mjs"
   ],
   "references": [
+    {
+      "path": "../../libs/api-client"
+    },
     {
       "path": "../../libs/ui"
     }

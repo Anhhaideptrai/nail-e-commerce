@@ -1,0 +1,134 @@
+{
+  "common": {
+    "currency": "$",
+    "addToBag": "Add to Bag",
+    "continueShopping": "Continue Shopping",
+    "viewBag": "View Bag & Checkout",
+    "checkout": "Checkout",
+    "subtotal": "Subtotal",
+    "total": "Total",
+    "discount": "Discount",
+    "shippingFree": "Free Shipping",
+    "shippingCalculated": "Shipping calculated at checkout",
+    "quantity": "Qty",
+    "size": "Size",
+    "shape": "Shape",
+    "length": "Length",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success"
+  },
+  "nav": {
+    "home": "Home",
+    "shop": "Shop",
+    "collections": "Collections",
+    "wholesale": "Wholesale",
+    "about": "About",
+    "contact": "Contact",
+    "cart": "Cart",
+    "trackOrder": "Track Order"
+  },
+  "home": {
+    "hero": {
+      "title": "Luxury Press-On Nails",
+      "subtitle": "Handcrafted elegance at your fingertips",
+      "shopNow": "Shop Now"
+    },
+    "featured": "Featured Collections",
+    "newArrivals": "New Arrivals"
+  },
+  "product": {
+    "soldOut": "Sold Out",
+    "inStock": "In Stock",
+    "selectSize": "Select Size",
+    "selectShape": "Select Shape",
+    "selectLength": "Select Length",
+    "sizeGuide": "Size Guide",
+    "addedToCart": "Added to Bag ✓",
+    "selectOptions": "Select Options",
+    "description": "Description",
+    "shippingReturns": "Shipping & Returns",
+    "material": "Material",
+    "processingTime": "Processing Time",
+    "relatedProducts": "Related Products",
+    "youMayLike": "You May Also Like"
+  },
+  "cart": {
+    "title": "Shopping Bag",
+    "empty": "Your bag is empty",
+    "emptyDescription": "Add items to get started",
+    "shopNow": "Shop Now",
+    "removeItem": "Remove",
+    "applyDiscount": "Apply Discount Code",
+    "discountPlaceholder": "Enter code",
+    "apply": "Apply",
+    "invalidCode": "Invalid discount code",
+    "discountApplied": "Discount applied!",
+    "orderSummary": "Order Summary",
+    "proceedToCheckout": "Proceed to Checkout"
+  },
+  "checkout": {
+    "title": "Checkout",
+    "shippingInfo": "Shipping Information",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "email": "Email",
+    "phone": "Phone",
+    "address": "Address",
+    "city": "City",
+    "postalCode": "Postal Code",
+    "country": "Country",
+    "paymentMethod": "Payment Method",
+    "creditCard": "Credit Card",
+    "paypal": "PayPal",
+    "placeOrder": "Place Order",
+    "processing": "Processing...",
+    "orderSuccess": "Order Placed Successfully!",
+    "orderNumber": "Order Number",
+    "thankYou": "Thank you for your order",
+    "emailConfirmation": "A confirmation email has been sent to",
+    "trackYourOrder": "Track Your Order",
+    "required": "Required",
+    "invalidEmail": "Invalid email address"
+  },
+  "wholesale": {
+    "title": "Wholesale Inquiry",
+    "subtitle": "Partner with Silver14 Nail",
+    "description": "We offer exclusive wholesale pricing for boutiques, salons, and retailers. Fill out the form below and our team will get back to you within 24-48 hours.",
+    "businessName": "Business Name",
+    "contactName": "Contact Name",
+    "email": "Email",
+    "phone": "Phone",
+    "businessType": "Business Type",
+    "message": "Message",
+    "submit": "Submit Inquiry",
+    "success": "Your inquiry has been submitted successfully!",
+    "error": "Failed to submit inquiry. Please try again."
+  },
+  "tracking": {
+    "title": "Track Your Order",
+    "orderId": "Order ID",
+    "phone": "Phone Number",
+    "track": "Track Order",
+    "notFound": "Order not found",
+    "status": {
+      "processing": "Processing",
+      "shipped": "Shipped",
+      "delivered": "Delivered"
+    }
+  },
+  "admin": {
+    "title": "Admin Dashboard",
+    "orders": "Orders",
+    "products": "Products",
+    "inventory": "Inventory",
+    "orderDetails": "Order Details",
+    "updateStatus": "Update Status",
+    "save": "Save Changes"
+  },
+  "trust": {
+    "freeShipping": "Free shipping over $50",
+    "returns": "14-day returns",
+    "handmade": "Handmade with care"
+  }
+}
