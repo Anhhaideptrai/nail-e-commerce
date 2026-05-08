@@ -1,5 +1,8 @@
+'use client';
+
 import { useState } from 'react';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import { motion, AnimatePresence } from 'motion/react';
 import { ChevronRight, CreditCard, Shield, ArrowLeft, Check } from 'lucide-react';
 import { ImageWithFallback } from '@/components/figma/ImageWithFallback';
@@ -45,6 +48,9 @@ function StepIndicator({ current }: { current: Step }) {
 
 export default function CheckoutPage() {
   const { state, subtotal, discountAmount, total, dispatch, addOrder } = useCart();
+  const params = useParams<{ lng?: string }>();
+  const lng = params.lng ?? 'en';
+  const localizedHref = (href: string) => `/${lng}${href}`;
   const [step, setStep] = useState<Step>('contact');
   const [isProcessing, setIsProcessing] = useState(false);
   const [orderId, setOrderId] = useState('');
@@ -115,7 +121,7 @@ export default function CheckoutPage() {
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
         {/* Logo */}
         <div className="text-center mb-8">
-          <Link href="/" className="text-[#1A1A1A]" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600, fontSize: '1.5rem', letterSpacing: '0.25em' }}>
+          <Link href={`/${lng}`} className="text-[#1A1A1A]" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600, fontSize: '1.5rem', letterSpacing: '0.25em' }}>
             LUNELLE
           </Link>
         </div>
@@ -355,14 +361,14 @@ export default function CheckoutPage() {
 
                     <div className="flex flex-col sm:flex-row gap-3 justify-center">
                       <Link
-                        href="/order-tracking"
+                        href={localizedHref('/order/tracking')}
                         className="inline-flex items-center justify-center gap-2 border border-[#1A1A1A] text-[#1A1A1A] px-8 py-3.5 text-xs uppercase tracking-widest hover:bg-[#1A1A1A] hover:text-white transition-all"
                         style={{ letterSpacing: '0.12em' }}
                       >
                         Track Order
                       </Link>
                       <Link
-                        href="/products"
+                        href={localizedHref('/products')}
                         className="inline-flex items-center justify-center gap-2 bg-[#1A1A1A] text-white px-8 py-3.5 text-xs uppercase tracking-widest hover:bg-[#333] transition-colors"
                         style={{ letterSpacing: '0.12em' }}
                       >

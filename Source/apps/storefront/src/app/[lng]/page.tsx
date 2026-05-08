@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import { motion } from 'framer-motion';
 import {
   ArrowRight,
@@ -68,6 +69,10 @@ const SectionTitle = ({
 );
 
 export default function HomePage() {
+  const params = useParams<{ lng?: string }>();
+  const lng = params.lng ?? 'en';
+  const localizedHref = (href: string) => `/${lng}${href}`;
+
   return (
     <>
       {/* HERO */}
@@ -110,14 +115,14 @@ export default function HomePage() {
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
-              href="/products"
+              href={localizedHref('/products')}
               className="inline-flex items-center justify-center gap-2 bg-white text-[#1A1A1A] px-9 py-4 text-xs uppercase tracking-[0.15em]"
             >
               Shop Collection <ArrowRight className="size-3.5" />
             </Link>
 
             <Link
-              href="/wholesale"
+              href={localizedHref('/wholesales')}
               className="inline-flex items-center justify-center gap-2 border border-white text-white px-9 py-4 text-xs uppercase tracking-[0.15em]"
             >
               Wholesale Enquiry
@@ -149,7 +154,7 @@ export default function HomePage() {
       <section className="py-20 max-w-7xl mx-auto px-4">
         <div className="flex justify-between mb-12">
           <SectionTitle eyebrow="Just Arrived" title="New Collection" />
-          <Link href="/products?filter=new" className="text-xs uppercase">
+          <Link href={localizedHref('/products?filter=new')} className="text-xs uppercase">
             View All
           </Link>
         </div>
@@ -165,7 +170,7 @@ export default function HomePage() {
       <section className="py-20 max-w-7xl mx-auto px-4">
         <div className="flex justify-between mb-12">
           <SectionTitle eyebrow="Customer Favourites" title="Best Sellers" />
-          <Link href="/products?filter=bestseller" className="text-xs uppercase">
+          <Link href={localizedHref('/products?filter=bestseller')} className="text-xs uppercase">
             View All
           </Link>
         </div>
@@ -185,7 +190,7 @@ export default function HomePage() {
         </p>
 
         <Link
-          href="/wholesale"
+          href={localizedHref('/wholesales')}
           className="bg-white text-black px-8 py-3 uppercase text-xs tracking-widest"
         >
           Submit Enquiry <ArrowRight className="inline size-3 ml-2" />

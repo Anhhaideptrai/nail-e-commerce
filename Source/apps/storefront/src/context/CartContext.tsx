@@ -1,3 +1,5 @@
+'use client';
+
 import React, { createContext, useContext, useReducer, useEffect } from 'react';
 import { Product, DISCOUNT_CODES } from '../MOCK_DATAS/products';
 
@@ -134,6 +136,10 @@ const CartContext = createContext<CartContextValue | null>(null);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
   const [state, dispatch] = useReducer(cartReducer, initialState, () => {
+    if (typeof window === 'undefined') {
+      return initialState;
+    }
+
     try {
       const saved = localStorage.getItem('lunelle_cart');
       return saved ? JSON.parse(saved) : initialState;
@@ -143,6 +149,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   });
 
   useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
     localStorage.setItem('lunelle_cart', JSON.stringify(state));
   }, [state]);
 
@@ -164,6 +174,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   };
 
   const addOrder = (order: MockOrder) => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
     try {
       const existing = JSON.parse(localStorage.getItem('lunelle_orders') || '[]');
       localStorage.setItem('lunelle_orders', JSON.stringify([...existing, order]));
@@ -173,6 +187,10 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   };
 
   const getOrder = (orderId: string, phone: string): MockOrder | null => {
+    if (typeof window === 'undefined') {
+      return null;
+    }
+
     try {
       const orders: MockOrder[] = JSON.parse(localStorage.getItem('lunelle_orders') || '[]');
       return orders.find(o => o.id === orderId && o.phone === phone) || null;

@@ -1,4 +1,7 @@
+'use client';
+
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 import { motion } from 'motion/react';
 import { ImageWithFallback } from '../figma/ImageWithFallback';
 import { Product } from '@/MOCK_DATAS/products';
@@ -10,6 +13,8 @@ interface ProductCardProps {
 
 export function ProductCard({ product, className = '' }: ProductCardProps) {
   const displayPrice = product.salePrice ?? product.price;
+  const params = useParams<{ lng?: string }>();
+  const lng = params.lng ?? 'en';
 
   return (
     <motion.div
@@ -19,7 +24,7 @@ export function ProductCard({ product, className = '' }: ProductCardProps) {
       transition={{ duration: 0.5, ease: 'easeOut' }}
       className={`group ${className}`}
     >
-      <Link href={`/products/${product.id}`} className="block">
+      <Link href={`/${lng}/products/${product.id}`} className="block">
         {/* Image */}
         <div className="relative overflow-hidden bg-[#F5F5F5] aspect-[3/4]">
           <ImageWithFallback

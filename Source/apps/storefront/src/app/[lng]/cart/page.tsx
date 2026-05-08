@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import {  useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -210,6 +212,7 @@ export default function CartPage() {
                     </button>
                   </div>
                   {discountError && <p className="text-red-500 text-xs mt-1.5">{discountError}</p>}
+                  {discountSuccess && <p className="text-[#4A7A5A] text-xs mt-1.5">{discountSuccess}</p>}
                 </div>
               ) : (
                 <div className="mb-6 flex items-center justify-between bg-white border border-[#4A7A5A]/30 px-4 py-3">

@@ -1,3 +1,5 @@
+'use client';
+
 import { useState } from 'react';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -10,11 +12,11 @@ import { getProductById, getRelatedProducts } from '@/MOCK_DATAS/products';
 import { useCart, CartItem } from '@/context/CartContext';
 
 export default function ProductDetailPage() {
-  const { id } = useParams();
+  const { lng, slug } = useParams<{ lng: string; slug: string }>();
   const router = useRouter();
   const { dispatch, cartCount, subtotal } = useCart();
 
-  const product = getProductById(id.toString() || '');
+  const product = getProductById(slug || '');
   const related = product ? getRelatedProducts(product) : [];
 
   const [selectedImage, setSelectedImage] = useState(0);
@@ -31,7 +33,7 @@ export default function ProductDetailPage() {
       <div className="min-h-screen pt-24 flex items-center justify-center">
         <div className="text-center">
           <p className="text-[#9A9A9A] mb-4">Product not found</p>
-          <Link href="/products" className="text-[#1A1A1A] text-xs uppercase tracking-widest underline">
+          <Link href={`/${lng}/products`} className="text-[#1A1A1A] text-xs uppercase tracking-widest underline">
             Back to Shop
           </Link>
         </div>
@@ -128,12 +130,12 @@ export default function ProductDetailPage() {
     <div className="min-h-screen pt-16 md:pt-20">
       {/* Breadcrumb */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex items-center gap-2 text-xs text-[#9A9A9A]">
-        <button onClick={() => router.push(`/products/${id}`)} className="flex items-center gap-1.5 hover:text-[#1A1A1A] transition-colors">
+        <button onClick={() => router.back()} className="flex items-center gap-1.5 hover:text-[#1A1A1A] transition-colors">
           <ArrowLeft className="size-3" />
           Back
         </button>
         <span>/</span>
-        <Link href="/products" className="hover:text-[#1A1A1A] transition-colors">Shop</Link>
+        <Link href={`/${lng}/products`} className="hover:text-[#1A1A1A] transition-colors">Shop</Link>
         <span>/</span>
         <span className="text-[#1A1A1A]">{product.name}</span>
       </div>

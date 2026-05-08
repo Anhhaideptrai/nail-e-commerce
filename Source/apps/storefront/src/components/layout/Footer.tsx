@@ -1,10 +1,16 @@
+'use client';
+
 import { useState } from 'react';
-import { Link } from 'react-router';
-import { Instagram, Facebook, Mail, MapPin, CreditCard } from 'lucide-react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { Camera, CreditCard, Mail, MapPin, MessageCircle } from 'lucide-react';
 
 export function Footer() {
   const [email, setEmail] = useState('');
   const [subscribed, setSubscribed] = useState(false);
+  const pathname = usePathname();
+  const lng = pathname.split('/').filter(Boolean)[0] || 'en';
+  const localizedHref = (href: string) => `/${lng}${href}`;
 
   const handleSubscribe = (e: React.FormEvent) => {
     e.preventDefault();
@@ -65,10 +71,10 @@ export function Footer() {
             </p>
             <div className="flex gap-4">
               <a href="#" className="text-[#6A6A6A] hover:text-white transition-colors">
-                <Instagram className="size-4" />
+                <Camera className="size-4" />
               </a>
               <a href="#" className="text-[#6A6A6A] hover:text-white transition-colors">
-                <Facebook className="size-4" />
+                <MessageCircle className="size-4" />
               </a>
               <a href="mailto:hello@lunellenails.com" className="text-[#6A6A6A] hover:text-white transition-colors">
                 <Mail className="size-4" />
@@ -81,15 +87,15 @@ export function Footer() {
             <p className="text-white text-xs uppercase tracking-widest mb-5" style={{ letterSpacing: '0.15em' }}>Shop</p>
             <ul className="space-y-3">
               {[
-                { label: 'All Products', href: '/products' },
-                { label: 'French & Classic', href: '/products?collection=french-classic' },
-                { label: 'Glitter & Metallic', href: '/products?collection=glitter-metallic' },
-                { label: 'Nail Art', href: '/products?collection=nail-art' },
-                { label: 'Solid Colors', href: '/products?collection=solid-colors' },
-                { label: 'Wholesale', href: '/wholesale' },
+                { label: 'All Products', href: localizedHref('/products') },
+                { label: 'French & Classic', href: localizedHref('/products?collection=french-classic') },
+                { label: 'Glitter & Metallic', href: localizedHref('/products?collection=glitter-metallic') },
+                { label: 'Nail Art', href: localizedHref('/products?collection=nail-art') },
+                { label: 'Solid Colors', href: localizedHref('/products?collection=solid-colors') },
+                { label: 'Wholesale', href: localizedHref('/wholesales') },
               ].map(l => (
                 <li key={l.label}>
-                  <Link to={l.href} className="text-[#6A6A6A] hover:text-white text-sm transition-colors">
+                  <Link href={l.href} className="text-[#6A6A6A] hover:text-white text-sm transition-colors">
                     {l.label}
                   </Link>
                 </li>
@@ -102,15 +108,15 @@ export function Footer() {
             <p className="text-white text-xs uppercase tracking-widest mb-5" style={{ letterSpacing: '0.15em' }}>Information</p>
             <ul className="space-y-3">
               {[
-                { label: 'About Lunelle', href: '/#about' },
-                { label: 'How To Apply', href: '/#how-to' },
-                { label: 'Size Guide', href: '/#size-guide' },
-                { label: 'Track Your Order', href: '/order-tracking' },
-                { label: 'FAQ', href: '/#faq' },
+                { label: 'About Lunelle', href: `/${lng}#about` },
+                { label: 'How To Apply', href: `/${lng}#how-to` },
+                { label: 'Size Guide', href: `/${lng}#size-guide` },
+                { label: 'Track Your Order', href: localizedHref('/order/tracking') },
+                { label: 'FAQ', href: `/${lng}#faq` },
                 { label: 'Contact Us', href: 'mailto:hello@lunellenails.com' },
               ].map(l => (
                 <li key={l.label}>
-                  <Link to={l.href} className="text-[#6A6A6A] hover:text-white text-sm transition-colors">
+                  <Link href={l.href} className="text-[#6A6A6A] hover:text-white text-sm transition-colors">
                     {l.label}
                   </Link>
                 </li>

@@ -1,4 +1,7 @@
+'use client';
+
 import { useState } from 'react';
+import { useParams } from 'next/navigation';
 import { motion } from 'motion/react';
 import { Check, ArrowRight, Globe, Package, Handshake } from 'lucide-react';
 import Link from 'next/link';
@@ -19,6 +22,8 @@ const COUNTRIES = [
 ];
 
 export default function WholesalePage() {
+  const params = useParams<{ lng?: string }>();
+  const lng = params.lng ?? 'en';
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState({
@@ -129,7 +134,7 @@ export default function WholesalePage() {
               Our partnership team will contact you at <strong>{form.email}</strong>.
             </p>
             <Link
-              href="/products"
+              href={`/${lng}/products`}
               className="inline-flex items-center gap-2 bg-[#1A1A1A] text-white px-8 py-4 text-xs uppercase tracking-widest hover:bg-[#333] transition-colors"
               style={{ letterSpacing: '0.15em' }}
             >

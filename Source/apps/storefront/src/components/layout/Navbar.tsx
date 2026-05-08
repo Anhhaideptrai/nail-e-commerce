@@ -1,15 +1,18 @@
+'use client';
+
 import { useState, useEffect } from 'react';
-import { Link, useLocation } from 'react-router';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { ShoppingBag, Search, Menu, X, ChevronDown, User } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
-import { COLLECTIONS } from '../../data/products';
+import { COLLECTIONS } from '../../MOCK_DATAS/products';
 import { LanguageSwitcher } from '../shared/LanguageSwitcher';
 
 const navLinks = [
   { label: 'Shop', href: '/products' },
   { label: 'Collections', href: '/products', hasDropdown: true },
-  { label: 'Wholesale', href: '/wholesale' },
-  { label: 'Track Order', href: '/order-tracking' },
+  { label: 'Wholesale', href: '/wholesales' },
+  { label: 'Track Order', href: '/order/tracking' },
 ];
 
 export function Navbar() {
@@ -19,9 +22,11 @@ export function Navbar() {
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
   const { cartCount } = useCart();
-  const location = useLocation();
+  const pathname = usePathname();
+  const lng = pathname.split('/').filter(Boolean)[0] || 'en';
+  const localizedHref = (href: string) => `/${lng}${href}`;
 
-  const isHome = location.pathname === '/';
+  const isHome = pathname === '/' || pathname === '/en' || pathname === '/de' || pathname === '/fr';
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > 40);
@@ -32,7 +37,7 @@ export function Navbar() {
   useEffect(() => {
     setMobileOpen(false);
     setSearchOpen(false);
-  }, [location]);
+  }, [pathname]);
 
   const navBg = isHome && !isScrolled ? 'bg-transparent' : 'bg-white/95 backdrop-blur-md border-b border-[#E8E8E8]';
   const textColor = isHome && !isScrolled ? 'text-white' : 'text-[#1A1A1A]';
@@ -44,8 +49,8 @@ export function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
-            <Link
-              to="/"
+              <Link
+                href={`/${lng}`}
               className={`flex-shrink-0 tracking-[0.3em] uppercase text-sm ${logoColor} transition-colors duration-300`}
               style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600, fontSize: '1.25rem', letterSpacing: '0.25em' }}
             >
@@ -75,7 +80,7 @@ export function Navbar() {
                         {COLLECTIONS.map(col => (
                           <Link
                             key={col.id}
-                            to={col.id === 'all' ? '/products' : `/products?collection=${col.id}`}
+                            href={localizedHref(col.id === 'all' ? '/products' : `/products?collection=${col.id}`)}
                             className="block px-5 py-2.5 text-[#1A1A1A] text-xs tracking-widest uppercase hover:bg-[#F8F8F8] transition-colors"
                             style={{ letterSpacing: '0.1em' }}
                           >
@@ -88,7 +93,7 @@ export function Navbar() {
                 ) : (
                   <Link
                     key={link.label}
-                    to={link.href}
+                    href={localizedHref(link.href)}
                     className={`tracking-widest uppercase text-xs ${textColor} transition-colors duration-300 hover:opacity-70`}
                     style={{ letterSpacing: '0.12em' }}
                   >
@@ -110,12 +115,12 @@ export function Navbar() {
                 <Search className="size-[18px]" />
               </button>
               <Link
-                to="/account"
+                href={localizedHref('/account')}
                 className={`hidden md:flex ${textColor} transition-all hover:opacity-70 p-1`}
               >
                 <User className="size-[18px]" />
               </Link>
-              <Link to="/cart" className={`relative ${textColor} transition-all hover:opacity-70 p-1`}>
+              <Link href={localizedHref('/cart')} className={`relative ${textColor} transition-all hover:opacity-70 p-1`}>
                 <ShoppingBag className="size-[18px]" />
                 {cartCount > 0 && (
                   <span className="absolute -top-1 -right-1 bg-[#1A1A1A] text-white text-[9px] rounded-full size-4 flex items-center justify-center font-medium">
@@ -139,7 +144,7 @@ export function Navbar() {
                 onSubmit={(e) => {
                   e.preventDefault();
                   if (searchQuery.trim()) {
-                    window.location.href = `/products?search=${encodeURIComponent(searchQuery)}`;
+                    window.location.href = localizedHref(`/products?search=${encodeURIComponent(searchQuery)}`);
                   }
                 }}
                 className="flex items-center gap-3"
@@ -175,7 +180,7 @@ export function Navbar() {
               </button>
             </div>
             <nav className="flex-1 px-6 py-8 space-y-6 overflow-y-auto">
-              <Link to="/products" className="block text-[#1A1A1A] uppercase tracking-widest text-xs" style={{ letterSpacing: '0.15em' }}>
+              <Link href={localizedHref('/products')} className="block text-[#1A1A1A] uppercase tracking-widest text-xs" style={{ letterSpacing: '0.15em' }}>
                 Shop All
               </Link>
               <div className="space-y-3">
@@ -183,20 +188,20 @@ export function Navbar() {
                 {COLLECTIONS.slice(1).map(col => (
                   <Link
                     key={col.id}
-                    to={`/products?collection=${col.id}`}
+                    href={localizedHref(`/products?collection=${col.id}`)}
                     className="block text-[#1A1A1A] text-sm pl-3"
                   >
                     {col.label}
                   </Link>
                 ))}
               </div>
-              <Link to="/wholesale" className="block text-[#1A1A1A] uppercase tracking-widest text-xs" style={{ letterSpacing: '0.15em' }}>
+              <Link href={localizedHref('/wholesales')} className="block text-[#1A1A1A] uppercase tracking-widest text-xs" style={{ letterSpacing: '0.15em' }}>
                 Wholesale
               </Link>
-              <Link to="/order-tracking" className="block text-[#1A1A1A] uppercase tracking-widest text-xs" style={{ letterSpacing: '0.15em' }}>
+              <Link href={localizedHref('/order/tracking')} className="block text-[#1A1A1A] uppercase tracking-widest text-xs" style={{ letterSpacing: '0.15em' }}>
                 Track Order
               </Link>
-              <Link to="/cart" className="block text-[#1A1A1A] uppercase tracking-widest text-xs" style={{ letterSpacing: '0.15em' }}>
+              <Link href={localizedHref('/cart')} className="block text-[#1A1A1A] uppercase tracking-widest text-xs" style={{ letterSpacing: '0.15em' }}>
                 Cart {cartCount > 0 && `(${cartCount})`}
               </Link>
               <div className="pt-4 border-t border-[#E8E8E8]">
