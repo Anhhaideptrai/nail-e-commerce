@@ -73,7 +73,7 @@ export default function WholesalePage() {
           Wholesale &amp; Partner Programme
         </h1>
         <p className="text-white/50 text-sm max-w-2xl mx-auto leading-relaxed">
-          Bring Lunelle's handcrafted luxury nail collections to your salon, boutique, or retail space.
+          Bring Silver14 Nail's handcrafted luxury nail collections to your salon, boutique, or retail space.
           We partner with salons, nail studios, beauty retailers, and e-commerce stores worldwide.
         </p>
       </div>
@@ -269,7 +269,7 @@ export default function WholesalePage() {
               )}
             </button>
             <p className="text-[#9A9A9A] text-xs text-center">
-              We typically respond within 2-3 business days. For urgent enquiries, email us at wholesale@lunellenails.com
+              We typically respond within 2-3 business days. For urgent enquiries, email us at wholesale@silver14nail.com
             </p>
           </form>
         )}

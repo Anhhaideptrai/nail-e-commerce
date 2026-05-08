@@ -139,7 +139,7 @@ export default function OrderTrackingPage() {
             >
               <AlertCircle className="size-8 text-[#C0C0C0] mx-auto mb-3" />
               <p className="text-[#1A1A1A] text-sm mb-1">Order not found</p>
-              <p className="text-[#9A9A9A] text-xs">Please check your Order ID and phone number. If you need assistance, contact us at hello@lunellenails.com</p>
+              <p className="text-[#9A9A9A] text-xs">Please check your Order ID and phone number. If you need assistance, contact us at hello@silver14nail.com</p>
             </motion.div>
           )}
 
@@ -206,7 +206,7 @@ export default function OrderTrackingPage() {
         <div className="text-center mt-8">
           <p className="text-[#9A9A9A] text-xs">
             Need help with your order?{' '}
-            <a href="mailto:hello@lunellenails.com" className="text-[#1A1A1A] underline">Contact us</a>
+            <a href="mailto:hello@silver14nail.com" className="text-[#1A1A1A] underline">Contact us</a>
           </p>
         </div>
       </div>

@@ -35,7 +35,7 @@ export const COLLECTIONS = [
 ];
 
 export const DISCOUNT_CODES: Record<string, number> = {
-  LUNELLE10: 0.1,
+  SILVER14: 0.1,
   WELCOME15: 0.15,
   EU20: 0.2,
 };

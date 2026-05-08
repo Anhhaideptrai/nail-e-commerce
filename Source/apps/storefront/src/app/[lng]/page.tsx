@@ -79,7 +79,7 @@ export default function HomePage() {
       <section className="relative h-screen min-h-[600px] flex items-center justify-center overflow-hidden">
         <ImageWithFallback
           src={heroImages.main}
-          alt="Lunelle Nails Hero"
+          alt="Silver14 Nail Hero"
           className="absolute inset-0 w-full h-full object-cover object-center"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/40 via-black/25 to-black/50" />
@@ -104,7 +104,7 @@ export default function HomePage() {
               lineHeight: 1.1,
             }}
           >
-            LUNELLE
+            Silver14 Nail
           </h1>
 
           <p className="text-white/80 mb-10 text-sm md:text-base leading-relaxed tracking-wide">
@@ -184,7 +184,7 @@ export default function HomePage() {
 
       {/* CTA */}
       <section className="bg-[#1A1A1A] py-16 text-center">
-        <h2 className="text-white text-2xl mb-4">Partner with Lunelle</h2>
+        <h2 className="text-white text-2xl mb-4">Partner with Silver14 Nail</h2>
         <p className="text-white/60 mb-8 max-w-md mx-auto">
           Wholesale partnerships available globally.
         </p>

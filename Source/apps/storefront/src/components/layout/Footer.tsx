@@ -27,14 +27,14 @@ export function Footer() {
         <div className="max-w-2xl mx-auto text-center">
           <p className="text-[#C0C0C0] uppercase tracking-[0.2em] text-xs mb-3" style={{ letterSpacing: '0.2em' }}>Exclusive Access</p>
           <h3 className="text-white mb-3" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 400, fontSize: '1.75rem', letterSpacing: '0.05em' }}>
-            Join the Lunelle Circle
+            Join the Silver14 Nail Circle
           </h3>
           <p className="text-[#8A8A8A] text-sm mb-8 leading-relaxed">
             Subscribe for early access to new collections, exclusive offers, and beauty inspiration.
           </p>
           {subscribed ? (
             <div className="text-[#C0C0C0] text-sm tracking-wide">
-              ✦ Thank you for joining us. A welcome gift awaits in your inbox.
+              Thank you for joining us. A welcome gift awaits in your inbox.
             </div>
           ) : (
             <form onSubmit={handleSubscribe} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
@@ -64,7 +64,7 @@ export function Footer() {
           {/* Brand */}
           <div className="md:col-span-1">
             <p className="text-white mb-4" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600, fontSize: '1.3rem', letterSpacing: '0.25em' }}>
-              LUNELLE
+              Silver14 Nail
             </p>
             <p className="text-[#6A6A6A] text-sm leading-relaxed mb-6">
               Handcrafted luxury press-on nails, shipped worldwide. Made with love, worn with confidence.
@@ -76,7 +76,7 @@ export function Footer() {
               <a href="#" className="text-[#6A6A6A] hover:text-white transition-colors">
                 <MessageCircle className="size-4" />
               </a>
-              <a href="mailto:hello@lunellenails.com" className="text-[#6A6A6A] hover:text-white transition-colors">
+              <a href="mailto:hello@silver14nail.com" className="text-[#6A6A6A] hover:text-white transition-colors">
                 <Mail className="size-4" />
               </a>
             </div>
@@ -108,12 +108,12 @@ export function Footer() {
             <p className="text-white text-xs uppercase tracking-widest mb-5" style={{ letterSpacing: '0.15em' }}>Information</p>
             <ul className="space-y-3">
               {[
-                { label: 'About Lunelle', href: `/${lng}#about` },
+                { label: 'About Silver14 Nail', href: `/${lng}#about` },
                 { label: 'How To Apply', href: `/${lng}#how-to` },
                 { label: 'Size Guide', href: `/${lng}#size-guide` },
                 { label: 'Track Your Order', href: localizedHref('/order/tracking') },
                 { label: 'FAQ', href: `/${lng}#faq` },
-                { label: 'Contact Us', href: 'mailto:hello@lunellenails.com' },
+                { label: 'Contact Us', href: 'mailto:hello@silver14nail.com' },
               ].map(l => (
                 <li key={l.label}>
                   <Link href={l.href} className="text-[#6A6A6A] hover:text-white text-sm transition-colors">
@@ -151,7 +151,7 @@ export function Footer() {
       <div className="border-t border-white/10 py-6 px-4">
         <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <p className="text-[#5A5A5A] text-xs">
-            © 2026 Lunelle Nails. All rights reserved.
+            © 2026 Silver14 Nail. All rights reserved.
           </p>
           <div className="flex items-center gap-3">
             <CreditCard className="size-4 text-[#5A5A5A]" />

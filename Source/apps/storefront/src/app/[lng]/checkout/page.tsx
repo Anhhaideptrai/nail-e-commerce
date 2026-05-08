@@ -118,7 +118,7 @@ export default function CheckoutPage() {
         {/* Logo */}
         <div className="text-center mb-8">
           <Link href={`/${lng}`} className="text-[#1A1A1A]" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 600, fontSize: '1.5rem', letterSpacing: '0.25em' }}>
-            LUNELLE
+            Silver14 Nail
           </Link>
         </div>
 

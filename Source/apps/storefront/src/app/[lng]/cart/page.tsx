@@ -24,7 +24,7 @@ export default function CartPage() {
       setDiscountSuccess(`Code "${discountInput.toUpperCase()}" applied!`);
       setDiscountError('');
     } else {
-      setDiscountError('Invalid discount code. Try LUNELLE10, WELCOME15, or EU20');
+      setDiscountError('Invalid discount code. Try SILVER14, WELCOME15, or EU20');
       setDiscountSuccess('');
     }
   };

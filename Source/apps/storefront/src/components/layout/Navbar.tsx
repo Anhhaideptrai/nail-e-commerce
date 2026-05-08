@@ -15,7 +15,7 @@ import {
 } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
 import { COLLECTIONS } from '../../MOCK_DATAS/products';
-import { LanguageSwitcher } from '../shared/LanguageSwitcher';
+import { HeaderPreferencesDropdown } from '../shared/HeaderPreferencesDropdown';
 
 const navLinks = [
   { label: 'Shop', href: '/products' },
@@ -29,8 +29,6 @@ const announcements = [
   'Price includes tax. No hidden fees at checkout.',
   'Buy 3 sets and get 1 accessory kit free',
 ];
-
-const shippingDestinations = ['United States', 'Germany', 'France', 'United Kingdom'];
 
 export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -114,33 +112,17 @@ export function Navbar() {
             className="text-center uppercase text-[#1A1A1A]"
             style={{
               fontFamily: "'Cormorant Garamond', serif",
-              fontSize: '1.45rem',
+              fontSize: '1.25rem',
               fontWeight: 600,
-              letterSpacing: '0.28em',
+              letterSpacing: '0.12em',
             }}
           >
-            LUNELLE
+            Silver14 Nail
           </Link>
 
           <div className="flex items-center justify-end gap-2 md:gap-4">
-            <label className="hidden items-center gap-2 text-[11px] uppercase tracking-[0.12em] text-[#5A5A5A] lg:inline-flex">
-              <span>Ship to</span>
-              <select className="bg-transparent text-[11px] uppercase tracking-[0.12em] outline-none">
-                {shippingDestinations.map((destination) => (
-                  <option key={destination} value={destination}>
-                    {destination}
-                  </option>
-                ))}
-              </select>
-            </label>
-            <label className="hidden items-center gap-2 text-[11px] uppercase tracking-[0.12em] text-[#5A5A5A] md:inline-flex">
-              <span>Currency</span>
-              <select className="bg-transparent text-[11px] uppercase tracking-[0.12em] outline-none" defaultValue="USD">
-                <option value="USD">USD</option>
-              </select>
-            </label>
             <div className="hidden md:block">
-              <LanguageSwitcher />
+              <HeaderPreferencesDropdown />
             </div>
             <Link
               href={localizedHref('/account')}
@@ -244,10 +226,10 @@ export function Navbar() {
                   fontFamily: "'Cormorant Garamond', serif",
                   fontSize: '1.1rem',
                   fontWeight: 600,
-                  letterSpacing: '0.2em',
+                  letterSpacing: '0.12em',
                 }}
               >
-                LUNELLE
+                Silver14 Nail
               </span>
               <button type="button" onClick={() => setMobileOpen(false)} aria-label="Close menu">
                 <X className="size-5 text-[#1A1A1A]" />
@@ -279,13 +261,7 @@ export function Navbar() {
                 Cart {cartCount > 0 && `(${cartCount})`}
               </Link>
               <div className="space-y-4 border-t border-[#E8E8E8] pt-5">
-                <LanguageSwitcher />
-                <label className="flex items-center gap-2 text-[11px] uppercase tracking-[0.12em] text-[#5A5A5A]">
-                  <span>Currency</span>
-                  <select className="bg-transparent text-[11px] uppercase tracking-[0.12em] outline-none" defaultValue="USD">
-                    <option value="USD">USD</option>
-                  </select>
-                </label>
+                <HeaderPreferencesDropdown align="left" />
               </div>
             </nav>
           </div>

@@ -1,7 +1,7 @@
 import type { I18nConfig } from 'next-i18next'
 
 const i18nConfig: I18nConfig = {
-  supportedLngs: ['en', 'fr', 'de'],
+  supportedLngs: ['en', 'vi'],
   fallbackLng: 'en',
   defaultNS: 'translation',
   ns: ['translation', 'footer', 'header'],
