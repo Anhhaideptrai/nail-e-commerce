@@ -1,8 +1,9 @@
 import './global.css';
+import { AdminI18nProvider } from '@/features/admin/i18n/admin-i18n-provider';
 
 export const metadata = {
-  title: 'Nail Commerce Admin',
-  description: 'CMS and operations dashboard for Nail Commerce.',
+  title: 'Silver14 Nail Admin',
+  description: 'CMS and operations dashboard for Silver14 Nail.',
 };
 
 export default function RootLayout({
@@ -12,7 +13,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <AdminI18nProvider>{children}</AdminI18nProvider>
+      </body>
     </html>
   );
 }
