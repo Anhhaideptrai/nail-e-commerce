@@ -21,24 +21,42 @@ export class JwtAuthGuard implements CanActivate {
 
   canActivate(context: ExecutionContext) {
     const request = context.switchToHttp().getRequest<RequestWithHeaders>();
-    const token = this.extractBearerToken(request.headers?.authorization);
+    const token = extractBearerToken(request.headers?.authorization);
     const payload = this.tokenService.verify(token, 'access');
 
-    request.user = this.authService.getUserByTokenSubject(payload.sub);
+    request.user = this.authService.getAdminByTokenSubject(payload.sub);
 
     return true;
   }
+}
 
-  private extractBearerToken(authorizationHeader: string | string[] | undefined) {
-    const header = Array.isArray(authorizationHeader)
-      ? authorizationHeader[0]
-      : authorizationHeader;
-    const [scheme, token] = header?.split(' ') ?? [];
+@Injectable()
+export class CustomerJwtAuthGuard implements CanActivate {
+  constructor(
+    private readonly authService: AuthService,
+    private readonly tokenService: TokenService,
+  ) {}
 
-    if (scheme !== 'Bearer' || !token) {
-      throw new UnauthorizedException('Missing bearer token');
-    }
+  canActivate(context: ExecutionContext) {
+    const request = context.switchToHttp().getRequest<RequestWithHeaders>();
+    const token = extractBearerToken(request.headers?.authorization);
+    const payload = this.tokenService.verify(token, 'access');
 
-    return token;
+    request.user = this.authService.getCustomerByTokenSubject(payload.sub);
+
+    return true;
   }
+}
+
+function extractBearerToken(authorizationHeader: string | string[] | undefined) {
+  const header = Array.isArray(authorizationHeader)
+    ? authorizationHeader[0]
+    : authorizationHeader;
+  const [scheme, token] = header?.split(' ') ?? [];
+
+  if (scheme !== 'Bearer' || !token) {
+    throw new UnauthorizedException('Missing bearer token');
+  }
+
+  return token;
 }

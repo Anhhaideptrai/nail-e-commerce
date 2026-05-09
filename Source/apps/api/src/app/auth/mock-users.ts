@@ -1,4 +1,4 @@
-export type MockUserRole = 'super_admin' | 'admin';
+export type MockUserRole = 'super_admin' | 'admin' | 'customer';
 
 export type MockAuthUser = {
   email: string;
@@ -7,6 +7,12 @@ export type MockAuthUser = {
   password: string;
   role: MockUserRole;
   status: 'active' | 'disabled';
+};
+
+export type CreateMockCustomerUser = {
+  email: string;
+  name: string;
+  password: string;
 };
 
 // MOCK ONLY: replace this array with rows from the users/admin_accounts table
@@ -30,3 +36,32 @@ export const mockAuthUsers: MockAuthUser[] = [
     status: 'active',
   },
 ];
+
+// MOCK ONLY: replace this array with rows from the customers/users table.
+// Storefront checkout must remain guest-capable; this customer auth is only for
+// account features such as order history, saved address, and wishlist.
+export const mockCustomerUsers: MockAuthUser[] = [
+  {
+    email: 'customer@silver14.test',
+    id: 'customer-demo',
+    name: 'Demo Customer',
+    password: 'password123',
+    role: 'customer',
+    status: 'active',
+  },
+];
+
+export function addMockCustomerUser(user: CreateMockCustomerUser) {
+  const customer: MockAuthUser = {
+    email: user.email.toLowerCase(),
+    id: `customer-${Date.now().toString(36)}`,
+    name: user.name,
+    password: user.password,
+    role: 'customer',
+    status: 'active',
+  };
+
+  mockCustomerUsers.push(customer);
+
+  return customer;
+}
