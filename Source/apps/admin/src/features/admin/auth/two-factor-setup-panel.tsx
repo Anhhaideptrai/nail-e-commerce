@@ -71,8 +71,12 @@ export function TwoFactorSetupPanel() {
 
       {setup?.enabled === false ? (
         <div className="grid gap-5 lg:grid-cols-[220px_1fr]">
-          <div className="w-fit rounded-md border border-neutral-200 bg-white p-4">
-            <QRCodeSVG size={180} value={setup.otpAuthUrl} />
+          <div className="w-fit max-w-full rounded-md border border-neutral-200 bg-white p-4">
+            <QRCodeSVG
+              className="h-auto max-w-full"
+              size={180}
+              value={setup.otpAuthUrl}
+            />
           </div>
           <div className="grid content-start gap-4">
             <div className="rounded-md border border-neutral-200 bg-neutral-50 p-3">
@@ -86,7 +90,7 @@ export function TwoFactorSetupPanel() {
             <label className="grid gap-1.5 text-sm font-medium text-neutral-700">
               Authenticator code
               <input
-                className="max-w-xs rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm font-normal tracking-[0.3em] text-neutral-950 outline-none focus:border-neutral-600"
+                className="w-full max-w-xs rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm font-normal tracking-[0.3em] text-neutral-950 outline-none focus:border-neutral-600"
                 inputMode="numeric"
                 maxLength={6}
                 onChange={(event) => setCode(event.target.value)}
@@ -94,7 +98,7 @@ export function TwoFactorSetupPanel() {
               />
             </label>
             <button
-              className="w-fit rounded-md bg-neutral-950 px-3 py-2 text-sm font-medium text-white hover:bg-neutral-800 disabled:cursor-not-allowed disabled:bg-neutral-400"
+              className="w-full rounded-md bg-neutral-950 px-3 py-2 text-sm font-medium text-white hover:bg-neutral-800 disabled:cursor-not-allowed disabled:bg-neutral-400 sm:w-fit"
               disabled={loading || code.replace(/\s/g, '').length !== 6}
               onClick={enableTwoFactor}
               type="button"
@@ -107,7 +111,7 @@ export function TwoFactorSetupPanel() {
 
       {!setup ? (
         <button
-          className="w-fit rounded-md bg-neutral-950 px-3 py-2 text-sm font-medium text-white hover:bg-neutral-800 disabled:cursor-not-allowed disabled:bg-neutral-400"
+          className="w-full rounded-md bg-neutral-950 px-3 py-2 text-sm font-medium text-white hover:bg-neutral-800 disabled:cursor-not-allowed disabled:bg-neutral-400 sm:w-fit"
           disabled={loading || !tokens}
           onClick={startSetup}
           type="button"
