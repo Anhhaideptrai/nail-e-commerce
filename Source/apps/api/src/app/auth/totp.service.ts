@@ -1,11 +1,15 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
-import { createHmac, timingSafeEqual } from 'crypto';
+import { createHmac, randomBytes, timingSafeEqual } from 'crypto';
 
 const TOTP_STEP_SECONDS = 30;
 const TOTP_CODE_DIGITS = 6;
 
 @Injectable()
 export class TotpService {
+  createSecret() {
+    return this.encodeBase32(randomBytes(20));
+  }
+
   createOtpAuthUrl({
     accountName,
     issuer,
@@ -90,6 +94,23 @@ export class TotpService {
     }
 
     return Buffer.from(bytes);
+  }
+
+  private encodeBase32(value: Buffer) {
+    const alphabet = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ234567';
+    let bits = '';
+    let output = '';
+
+    for (const byte of value) {
+      bits += byte.toString(2).padStart(8, '0');
+    }
+
+    for (let index = 0; index < bits.length; index += 5) {
+      const chunk = bits.slice(index, index + 5).padEnd(5, '0');
+      output += alphabet[Number.parseInt(chunk, 2)];
+    }
+
+    return output;
   }
 
   private safeCompare(left: string, right: string) {

@@ -82,11 +82,6 @@ export default function LoginPage() {
                 value={twoFactorCode}
               />
             </label>
-            <div className="rounded-md border border-amber-200 bg-amber-50 p-3 text-xs leading-5 text-amber-800">
-              <p className="font-medium">{t('login.demoTwoFactorSetup')}</p>
-              <p className="mt-1 break-all">{twoFactorChallenge.setupKey}</p>
-              <p className="mt-1 break-all">{twoFactorChallenge.otpAuthUrl}</p>
-            </div>
             {error ? <p className="text-sm text-rose-600">{error}</p> : null}
             <button
               className="rounded-md bg-neutral-950 px-3 py-2 text-sm font-medium text-white hover:bg-neutral-800 disabled:cursor-not-allowed disabled:bg-neutral-400"

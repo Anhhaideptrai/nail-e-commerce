@@ -47,6 +47,8 @@ export const adminMessages: Record<AdminLocale, AdminMessages> = {
     'nav.adminsDescription': 'Roles and access',
     'nav.settings': 'Settings',
     'nav.settingsDescription': 'Store configuration',
+    'nav.collapseSidebar': 'Collapse sidebar',
+    'nav.expandSidebar': 'Expand sidebar',
 
     'page.dashboard.eyebrow': 'Overview',
     'page.dashboard.title': 'Admin dashboard',
@@ -258,6 +260,8 @@ export const adminMessages: Record<AdminLocale, AdminMessages> = {
     'nav.adminsDescription': 'Vai trò và quyền',
     'nav.settings': 'Cài đặt',
     'nav.settingsDescription': 'Cấu hình cửa hàng',
+    'nav.collapseSidebar': 'Thu gọn thanh điều hướng',
+    'nav.expandSidebar': 'Mở rộng thanh điều hướng',
 
     'page.dashboard.eyebrow': 'Tổng quan',
     'page.dashboard.title': 'Bảng quản trị',
