@@ -63,6 +63,48 @@ export class AuthService {
     return this.createAuthResponse(user);
   }
 
+  createAdminTwoFactorSetup(userId: string) {
+    const user = this.findActiveAdminUser(userId);
+
+    if (user.twoFactorEnabled) {
+      return {
+        enabled: true,
+      };
+    }
+
+    user.pendingTwoFactorSecret =
+      user.pendingTwoFactorSecret ?? this.totpService.createSecret();
+
+    return {
+      enabled: false,
+      otpAuthUrl: this.totpService.createOtpAuthUrl({
+        accountName: user.email,
+        issuer: 'Silver14 Nail Admin',
+        secret: user.pendingTwoFactorSecret,
+      }),
+      setupKey: user.pendingTwoFactorSecret,
+    };
+  }
+
+  enableAdminTwoFactor(userId: string, code: string) {
+    const user = this.findActiveAdminUser(userId);
+
+    if (!user.pendingTwoFactorSecret) {
+      throw new UnauthorizedException('Two-factor setup has not started');
+    }
+
+    this.totpService.verifyCode(user.pendingTwoFactorSecret, code);
+
+    // TODO(database): encrypt this secret before saving it in the admin_accounts table.
+    user.twoFactorSecret = user.pendingTwoFactorSecret;
+    user.pendingTwoFactorSecret = undefined;
+    user.twoFactorEnabled = true;
+
+    return {
+      enabled: true,
+    };
+  }
+
   registerCustomer(email: string, password: string, name: string) {
     // TODO(database): replace this duplicate check and insert with a customers/users table.
     const normalizedEmail = email.toLowerCase();
@@ -136,13 +178,7 @@ export class AuthService {
   }
 
   getAdminByTokenSubject(userId: string): AuthenticatedUser {
-    const user = mockAuthUsers.find((item) => item.id === userId);
-
-    if (!user || user.status !== 'active') {
-      throw new UnauthorizedException('Invalid admin access token');
-    }
-
-    return this.toAuthenticatedUser(user);
+    return this.toAuthenticatedUser(this.findActiveAdminUser(userId));
   }
 
   getCustomerByTokenSubject(userId: string): AuthenticatedUser {
@@ -180,15 +216,18 @@ export class AuthService {
     return {
       challengeId,
       expiresIn: Math.floor(TWO_FACTOR_CHALLENGE_TTL_MS / 1000),
-      // Demo only: remove these fields once real admin 2FA enrollment exists.
-      otpAuthUrl: this.totpService.createOtpAuthUrl({
-        accountName: user.email,
-        issuer: 'Silver14 Nail Admin',
-        secret: user.twoFactorSecret ?? '',
-      }),
-      setupKey: user.twoFactorSecret,
       twoFactorRequired: true,
     };
+  }
+
+  private findActiveAdminUser(userId: string) {
+    const user = mockAuthUsers.find((item) => item.id === userId);
+
+    if (!user || user.status !== 'active') {
+      throw new UnauthorizedException('Invalid admin access token');
+    }
+
+    return user;
   }
 
   private toAuthenticatedUser(user: MockAuthUser): AuthenticatedUser {

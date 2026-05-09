@@ -20,9 +20,17 @@ export type LoginResponse = {
 export type AdminTwoFactorChallenge = {
   challengeId: string;
   expiresIn: number;
-  otpAuthUrl: string;
-  setupKey: string;
   twoFactorRequired: true;
 };
 
 export type AdminLoginResponse = LoginResponse | AdminTwoFactorChallenge;
+
+export type AdminTwoFactorSetup =
+  | {
+      enabled: true;
+    }
+  | {
+      enabled: false;
+      otpAuthUrl: string;
+      setupKey: string;
+    };

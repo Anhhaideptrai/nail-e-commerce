@@ -2,6 +2,7 @@ import { Body, Controller, Get, Post, UseGuards } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import type { AuthenticatedUser } from './auth.types';
 import { CurrentUser } from './decorators/current-user.decorator';
+import { EnableTwoFactorDto } from './dto/enable-two-factor.dto';
 import { LoginDto } from './dto/login.dto';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { RegisterCustomerDto } from './dto/register-customer.dto';
@@ -31,6 +32,21 @@ export class AuthController {
   @UseGuards(JwtAuthGuard)
   getMe(@CurrentUser() user: AuthenticatedUser) {
     return user;
+  }
+
+  @Post('2fa/setup')
+  @UseGuards(JwtAuthGuard)
+  setupTwoFactor(@CurrentUser() user: AuthenticatedUser) {
+    return this.authService.createAdminTwoFactorSetup(user.id);
+  }
+
+  @Post('2fa/enable')
+  @UseGuards(JwtAuthGuard)
+  enableTwoFactor(
+    @CurrentUser() user: AuthenticatedUser,
+    @Body() body: EnableTwoFactorDto,
+  ) {
+    return this.authService.enableAdminTwoFactor(user.id, body.code);
   }
 
   @Post('customer/register')
