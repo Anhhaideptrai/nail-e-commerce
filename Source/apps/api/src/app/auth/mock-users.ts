@@ -7,6 +7,8 @@ export type MockAuthUser = {
   password: string;
   role: MockUserRole;
   status: 'active' | 'disabled';
+  twoFactorEnabled?: boolean;
+  twoFactorSecret?: string;
 };
 
 export type CreateMockCustomerUser = {
@@ -26,6 +28,8 @@ export const mockAuthUsers: MockAuthUser[] = [
     password: 'password123',
     role: 'super_admin',
     status: 'active',
+    twoFactorEnabled: true,
+    twoFactorSecret: 'JBSWY3DPEHPK3PXP',
   },
   {
     email: 'admin@silver14.test',

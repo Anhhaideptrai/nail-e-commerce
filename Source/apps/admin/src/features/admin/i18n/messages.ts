@@ -91,6 +91,8 @@ export const adminMessages: Record<AdminLocale, AdminMessages> = {
     'action.inviteAdmin': 'Invite admin',
     'action.saveSettings': 'Save settings',
     'action.signIn': 'Sign in',
+    'action.verifyTwoFactor': 'Verify code',
+    'action.backToPassword': 'Back to password',
 
     'panel.recentOrders': 'Recent orders',
     'panel.recentOrdersDescription': 'Payment and fulfillment state that requires attention.',
@@ -202,11 +204,17 @@ export const adminMessages: Record<AdminLocale, AdminMessages> = {
     'form.orderEmails': 'Order emails',
     'form.wholesaleForm': 'Wholesale form',
     'form.password': 'Password',
+    'form.twoFactorCode': 'Authenticator code',
 
     'login.title': 'Admin sign in',
     'login.description': 'Sign in with a Super Admin or Admin account to manage catalog, orders, wholesale, shipping, discounts, and store settings.',
     'login.invalidCredentials': 'Invalid email or password.',
+    'login.invalidTwoFactorCode': 'Invalid authenticator code.',
     'login.signingIn': 'Signing in...',
+    'login.twoFactorTitle': 'Two-factor authentication',
+    'login.twoFactorDescription': 'Enter the 6-digit code from Google Authenticator to complete admin sign in.',
+    'login.demoTwoFactorSetup': 'Demo setup key for Google Authenticator',
+    'login.verifyingTwoFactor': 'Verifying...',
   },
   vi: {
     'common.brand': 'Silver14 Nail',
@@ -294,6 +302,8 @@ export const adminMessages: Record<AdminLocale, AdminMessages> = {
     'action.inviteAdmin': 'Mời admin',
     'action.saveSettings': 'Lưu cài đặt',
     'action.signIn': 'Đăng nhập',
+    'action.verifyTwoFactor': 'Xác thực mã',
+    'action.backToPassword': 'Quay lại mật khẩu',
 
     'panel.recentOrders': 'Đơn hàng gần đây',
     'panel.recentOrdersDescription': 'Trạng thái thanh toán và xử lý cần chú ý.',
@@ -405,10 +415,16 @@ export const adminMessages: Record<AdminLocale, AdminMessages> = {
     'form.orderEmails': 'Email đơn hàng',
     'form.wholesaleForm': 'Form bán sỉ',
     'form.password': 'Mật khẩu',
+    'form.twoFactorCode': 'Mã Authenticator',
 
     'login.title': 'Đăng nhập admin',
     'login.description': 'Đăng nhập bằng tài khoản Super Admin hoặc Admin để quản lý catalog, đơn hàng, bán sỉ, vận chuyển, giảm giá và cài đặt cửa hàng.',
     'login.invalidCredentials': 'Email hoặc mật khẩu không đúng.',
+    'login.invalidTwoFactorCode': 'Mã xác thực không đúng.',
     'login.signingIn': 'Đang đăng nhập...',
+    'login.twoFactorTitle': 'Xác thực hai lớp',
+    'login.twoFactorDescription': 'Nhập mã 6 chữ số từ Google Authenticator để hoàn tất đăng nhập admin.',
+    'login.demoTwoFactorSetup': 'Setup key demo cho Google Authenticator',
+    'login.verifyingTwoFactor': 'Đang xác thực...',
   },
 };

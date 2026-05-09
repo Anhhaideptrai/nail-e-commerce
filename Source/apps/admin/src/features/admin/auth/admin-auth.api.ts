@@ -1,4 +1,8 @@
-import type { AdminUser, LoginResponse } from './admin-auth.types';
+import type {
+  AdminLoginResponse,
+  AdminUser,
+  LoginResponse,
+} from './admin-auth.types';
 
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_BASE_URL ?? 'http://localhost:3000/api';
@@ -12,6 +16,20 @@ export async function loginAdmin(email: string, password: string) {
 
   if (!response.ok) {
     throw new Error('Invalid email or password');
+  }
+
+  return (await response.json()) as AdminLoginResponse;
+}
+
+export async function verifyAdminTwoFactor(challengeId: string, code: string) {
+  const response = await fetch(`${API_BASE_URL}/auth/2fa/verify`, {
+    body: JSON.stringify({ challengeId, code }),
+    headers: { 'Content-Type': 'application/json' },
+    method: 'POST',
+  });
+
+  if (!response.ok) {
+    throw new Error('Invalid two-factor code');
   }
 
   return (await response.json()) as LoginResponse;

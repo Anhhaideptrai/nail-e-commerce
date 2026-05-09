@@ -5,6 +5,7 @@ import { CurrentUser } from './decorators/current-user.decorator';
 import { LoginDto } from './dto/login.dto';
 import { RefreshTokenDto } from './dto/refresh-token.dto';
 import { RegisterCustomerDto } from './dto/register-customer.dto';
+import { VerifyTwoFactorDto } from './dto/verify-two-factor.dto';
 import { CustomerJwtAuthGuard, JwtAuthGuard } from './guards/jwt-auth.guard';
 
 @Controller('auth')
@@ -14,6 +15,11 @@ export class AuthController {
   @Post('login')
   login(@Body() body: LoginDto) {
     return this.authService.login(body.email, body.password);
+  }
+
+  @Post('2fa/verify')
+  verifyTwoFactor(@Body() body: VerifyTwoFactorDto) {
+    return this.authService.verifyAdminTwoFactor(body.challengeId, body.code);
   }
 
   @Post('refresh')

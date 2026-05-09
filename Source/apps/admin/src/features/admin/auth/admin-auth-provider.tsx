@@ -8,22 +8,31 @@ import {
   useState,
   type ReactNode,
 } from 'react';
-import { getCurrentAdmin, loginAdmin } from './admin-auth.api';
+import {
+  getCurrentAdmin,
+  loginAdmin,
+  verifyAdminTwoFactor,
+} from './admin-auth.api';
 import {
   clearStoredTokens,
   getStoredTokens,
   setStoredTokens,
 } from './admin-auth.storage';
-import type { AdminAuthTokens, AdminUser } from './admin-auth.types';
+import type {
+  AdminAuthTokens,
+  AdminLoginResponse,
+  AdminUser,
+} from './admin-auth.types';
 
 type AuthStatus = 'checking' | 'authenticated' | 'unauthenticated';
 
 type AdminAuthContextValue = {
-  login: (email: string, password: string) => Promise<void>;
+  login: (email: string, password: string) => Promise<AdminLoginResponse>;
   logout: () => void;
   status: AuthStatus;
   tokens: AdminAuthTokens | null;
   user: AdminUser | null;
+  verifyTwoFactor: (challengeId: string, code: string) => Promise<void>;
 };
 
 const AdminAuthContext = createContext<AdminAuthContextValue | null>(null);
@@ -60,10 +69,13 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
       login: async (email: string, password: string) => {
         const response = await loginAdmin(email, password);
 
-        setStoredTokens(response.tokens);
-        setTokens(response.tokens);
-        setUser(response.user);
-        setStatus('authenticated');
+        if ('twoFactorRequired' in response) {
+          return response;
+        }
+
+        applyAuthenticatedSession(response);
+
+        return response;
       },
       logout: () => {
         clearStoredTokens();
@@ -74,9 +86,24 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
       status,
       tokens,
       user,
+      verifyTwoFactor: async (challengeId: string, code: string) => {
+        const response = await verifyAdminTwoFactor(challengeId, code);
+
+        applyAuthenticatedSession(response);
+      },
     }),
     [status, tokens, user],
   );
+
+  function applyAuthenticatedSession(response: {
+    tokens: AdminAuthTokens;
+    user: AdminUser;
+  }) {
+    setStoredTokens(response.tokens);
+    setTokens(response.tokens);
+    setUser(response.user);
+    setStatus('authenticated');
+  }
 
   return (
     <AdminAuthContext.Provider value={value}>

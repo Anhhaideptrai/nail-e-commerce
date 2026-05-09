@@ -16,3 +16,13 @@ export type LoginResponse = {
   tokens: AdminAuthTokens;
   user: AdminUser;
 };
+
+export type AdminTwoFactorChallenge = {
+  challengeId: string;
+  expiresIn: number;
+  otpAuthUrl: string;
+  setupKey: string;
+  twoFactorRequired: true;
+};
+
+export type AdminLoginResponse = LoginResponse | AdminTwoFactorChallenge;

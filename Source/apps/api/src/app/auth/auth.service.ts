@@ -1,6 +1,7 @@
 import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
 import type { AuthenticatedUser, AuthTokens } from './auth.types';
 import { accessTokenTtlSeconds, TokenService } from './token.service';
+import { TotpService } from './totp.service';
 import {
   addMockCustomerUser,
   mockAuthUsers,
@@ -8,9 +9,21 @@ import {
   type MockAuthUser,
 } from './mock-users';
 
+const TWO_FACTOR_CHALLENGE_TTL_MS = 5 * 60 * 1000;
+
+type TwoFactorChallenge = {
+  expiresAt: number;
+  userId: string;
+};
+
 @Injectable()
 export class AuthService {
-  constructor(private readonly tokenService: TokenService) {}
+  private readonly twoFactorChallenges = new Map<string, TwoFactorChallenge>();
+
+  constructor(
+    private readonly tokenService: TokenService,
+    private readonly totpService: TotpService,
+  ) {}
 
   login(email: string, password: string) {
     // TODO(database): replace this file lookup with a users/admin_accounts table query.
@@ -22,6 +35,30 @@ export class AuthService {
     if (!user || user.password !== password || user.status !== 'active') {
       throw new UnauthorizedException('Invalid email or password');
     }
+
+    if (user.twoFactorEnabled && user.twoFactorSecret) {
+      return this.createTwoFactorChallenge(user);
+    }
+
+    return this.createAuthResponse(user);
+  }
+
+  verifyAdminTwoFactor(challengeId: string, code: string) {
+    const challenge = this.twoFactorChallenges.get(challengeId);
+
+    if (!challenge || challenge.expiresAt < Date.now()) {
+      this.twoFactorChallenges.delete(challengeId);
+      throw new UnauthorizedException('Two-factor challenge has expired');
+    }
+
+    const user = mockAuthUsers.find((item) => item.id === challenge.userId);
+
+    if (!user || !user.twoFactorSecret || user.status !== 'active') {
+      throw new UnauthorizedException('Invalid two-factor challenge');
+    }
+
+    this.totpService.verifyCode(user.twoFactorSecret, code);
+    this.twoFactorChallenges.delete(challengeId);
 
     return this.createAuthResponse(user);
   }
@@ -127,6 +164,30 @@ export class AuthService {
         tokenType: 'Bearer',
       } satisfies AuthTokens,
       user: this.toAuthenticatedUser(user),
+    };
+  }
+
+  private createTwoFactorChallenge(user: MockAuthUser) {
+    const challengeId = `2fa-${Date.now().toString(36)}-${Math.random()
+      .toString(36)
+      .slice(2, 10)}`;
+
+    this.twoFactorChallenges.set(challengeId, {
+      expiresAt: Date.now() + TWO_FACTOR_CHALLENGE_TTL_MS,
+      userId: user.id,
+    });
+
+    return {
+      challengeId,
+      expiresIn: Math.floor(TWO_FACTOR_CHALLENGE_TTL_MS / 1000),
+      // Demo only: remove these fields once real admin 2FA enrollment exists.
+      otpAuthUrl: this.totpService.createOtpAuthUrl({
+        accountName: user.email,
+        issuer: 'Silver14 Nail Admin',
+        secret: user.twoFactorSecret ?? '',
+      }),
+      setupKey: user.twoFactorSecret,
+      twoFactorRequired: true,
     };
   }
 
