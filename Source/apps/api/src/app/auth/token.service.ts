@@ -31,7 +31,7 @@ export class TokenService {
       throw new UnauthorizedException('Invalid token signature');
     }
 
-    const payload = JSON.parse(this.base64UrlDecode(encodedPayload)) as AuthTokenPayload;
+    const payload = this.parsePayload(encodedPayload);
 
     if (payload.type !== expectedType) {
       throw new UnauthorizedException('Invalid token type');
@@ -85,6 +85,29 @@ export class TokenService {
 
   private base64UrlDecode(value: string) {
     return Buffer.from(value, 'base64url').toString('utf8');
+  }
+
+  private parsePayload(encodedPayload: string): AuthTokenPayload {
+    try {
+      const payload = JSON.parse(
+        this.base64UrlDecode(encodedPayload),
+      ) as Partial<AuthTokenPayload>;
+
+      if (
+        typeof payload.email !== 'string' ||
+        typeof payload.exp !== 'number' ||
+        typeof payload.iat !== 'number' ||
+        typeof payload.role !== 'string' ||
+        typeof payload.sub !== 'string' ||
+        (payload.type !== 'access' && payload.type !== 'refresh')
+      ) {
+        throw new Error('Invalid token payload shape');
+      }
+
+      return payload as AuthTokenPayload;
+    } catch {
+      throw new UnauthorizedException('Invalid token payload');
+    }
   }
 
   private getSecret() {

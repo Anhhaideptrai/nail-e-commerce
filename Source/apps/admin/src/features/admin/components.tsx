@@ -1,8 +1,11 @@
 'use client';
 
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useEffect } from 'react';
 import type { ReactNode } from 'react';
 import { navItems } from './admin.data';
+import { useAdminAuth } from './auth/admin-auth-provider';
 import { supportedAdminLocales } from './i18n/messages';
 import { useAdminTranslation } from './i18n/admin-i18n-provider';
 import type { Metric, TableRow, Tone } from './admin.types';
@@ -17,6 +20,22 @@ const toneStyles: Record<Tone, string> = {
 
 export function AdminShell({ children }: { children: ReactNode }) {
   const { locale, setLocale, t } = useAdminTranslation();
+  const { logout, status, user } = useAdminAuth();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      router.replace('/login');
+    }
+  }, [router, status]);
+
+  if (status !== 'authenticated') {
+    return (
+      <main className="grid min-h-screen place-items-center bg-[#f6f6f3] text-sm text-neutral-500">
+        {t('auth.checkingSession')}
+      </main>
+    );
+  }
 
   return (
     <main className="min-h-screen bg-[#f6f6f3] text-neutral-950">
@@ -50,6 +69,9 @@ export function AdminShell({ children }: { children: ReactNode }) {
                 <h2 className="mt-1 text-2xl font-semibold tracking-tight">{t('common.operationsDashboard')}</h2>
               </div>
               <div className="flex flex-wrap items-center gap-2">
+                <span className="rounded-md border border-neutral-200 bg-white px-3 py-2 text-sm text-neutral-600">
+                  {user?.email}
+                </span>
                 <label className="flex items-center gap-2 text-sm font-medium text-neutral-600">
                   {t('common.language')}
                   <select
@@ -76,6 +98,16 @@ export function AdminShell({ children }: { children: ReactNode }) {
                 >
                   {t('common.newProduct')}
                 </Link>
+                <button
+                  className="rounded-md border border-neutral-300 bg-white px-3 py-2 text-sm font-medium text-neutral-700 hover:border-neutral-500"
+                  onClick={() => {
+                    logout();
+                    router.replace('/login');
+                  }}
+                  type="button"
+                >
+                  {t('auth.signOut')}
+                </button>
               </div>
             </div>
           </header>

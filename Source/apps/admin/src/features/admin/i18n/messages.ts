@@ -22,6 +22,8 @@ export const adminMessages: Record<AdminLocale, AdminMessages> = {
     'common.disabled': 'Disabled',
     'common.manual': 'Manual',
     'common.enabled': 'Enabled',
+    'auth.checkingSession': 'Checking admin session...',
+    'auth.signOut': 'Sign out',
 
     'nav.dashboard': 'Dashboard',
     'nav.dashboardDescription': 'Operational overview',
@@ -203,6 +205,8 @@ export const adminMessages: Record<AdminLocale, AdminMessages> = {
 
     'login.title': 'Admin sign in',
     'login.description': 'Sign in with a Super Admin or Admin account to manage catalog, orders, wholesale, shipping, discounts, and store settings.',
+    'login.invalidCredentials': 'Invalid email or password.',
+    'login.signingIn': 'Signing in...',
   },
   vi: {
     'common.brand': 'Silver14 Nail',
@@ -221,6 +225,8 @@ export const adminMessages: Record<AdminLocale, AdminMessages> = {
     'common.disabled': 'Tắt',
     'common.manual': 'Thủ công',
     'common.enabled': 'Bật',
+    'auth.checkingSession': 'Đang kiểm tra phiên admin...',
+    'auth.signOut': 'Đăng xuất',
 
     'nav.dashboard': 'Tổng quan',
     'nav.dashboardDescription': 'Tình hình vận hành',
@@ -402,5 +408,7 @@ export const adminMessages: Record<AdminLocale, AdminMessages> = {
 
     'login.title': 'Đăng nhập admin',
     'login.description': 'Đăng nhập bằng tài khoản Super Admin hoặc Admin để quản lý catalog, đơn hàng, bán sỉ, vận chuyển, giảm giá và cài đặt cửa hàng.',
+    'login.invalidCredentials': 'Email hoặc mật khẩu không đúng.',
+    'login.signingIn': 'Đang đăng nhập...',
   },
 };

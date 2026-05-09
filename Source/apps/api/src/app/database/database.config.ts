@@ -11,15 +11,12 @@ const DEFAULT_PORT_BY_PROVIDER: Record<DatabaseProvider, number> = {
 
 export function getDatabaseConfig(): DatabaseConnectionOptions {
   const provider = getDatabaseProvider(process.env.DB_PROVIDER);
-  const configuredPort = Number(process.env.DB_PORT);
 
   return {
     database: process.env.DB_NAME ?? '',
     host: process.env.DB_HOST ?? '',
     password: process.env.DB_PASSWORD ?? '',
-    port: Number.isFinite(configuredPort)
-      ? configuredPort
-      : DEFAULT_PORT_BY_PROVIDER[provider],
+    port: getDatabasePort(process.env.DB_PORT, provider),
     provider,
     ssl: process.env.DB_SSL === 'true',
     username: process.env.DB_USERNAME ?? '',
@@ -32,4 +29,19 @@ function getDatabaseProvider(value: string | undefined): DatabaseProvider {
   }
 
   return 'postgres';
+}
+
+function getDatabasePort(
+  value: string | undefined,
+  provider: DatabaseProvider,
+): number {
+  if (!value) {
+    return DEFAULT_PORT_BY_PROVIDER[provider];
+  }
+
+  const configuredPort = Number(value);
+
+  return Number.isFinite(configuredPort) && configuredPort > 0
+    ? configuredPort
+    : DEFAULT_PORT_BY_PROVIDER[provider];
 }
