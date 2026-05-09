@@ -1,4 +1,5 @@
 import './global.css';
+import { AdminAuthProvider } from '@/features/admin/auth/admin-auth-provider';
 import { AdminI18nProvider } from '@/features/admin/i18n/admin-i18n-provider';
 
 export const metadata = {
@@ -14,7 +15,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <AdminI18nProvider>{children}</AdminI18nProvider>
+        <AdminI18nProvider>
+          <AdminAuthProvider>{children}</AdminAuthProvider>
+        </AdminI18nProvider>
       </body>
     </html>
   );

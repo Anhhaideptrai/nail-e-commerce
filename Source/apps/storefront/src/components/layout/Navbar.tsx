@@ -14,6 +14,7 @@ import {
   X,
 } from 'lucide-react';
 import { useCart } from '../../context/CartContext';
+import { useCustomerAuth } from '../../features/auth/customer-auth-provider';
 import { COLLECTIONS } from '../../MOCK_DATAS/products';
 import { HeaderPreferencesDropdown } from '../shared/HeaderPreferencesDropdown';
 
@@ -37,6 +38,7 @@ export function Navbar() {
   const [searchQuery, setSearchQuery] = useState('');
   const [announcementIndex, setAnnouncementIndex] = useState(0);
   const { cartCount } = useCart();
+  const { status, user } = useCustomerAuth();
   const pathname = usePathname();
   const lng = pathname.split('/').filter(Boolean)[0] || 'en';
   const localizedHref = (href: string) => `/${lng}${href}`;
@@ -126,10 +128,15 @@ export function Navbar() {
             </div>
             <Link
               href={localizedHref('/account')}
-              className="hidden p-1 text-[#5A5A5A] hover:text-[#1A1A1A] md:inline-flex"
+              className="hidden items-center gap-1 p-1 text-[#5A5A5A] hover:text-[#1A1A1A] md:inline-flex"
               aria-label="Account"
             >
               <User className="size-4" />
+              {status === 'authenticated' && user ? (
+                <span className="text-[10px] uppercase tracking-[0.12em]">
+                  {user.name.split(' ')[0]}
+                </span>
+              ) : null}
             </Link>
             <Link
               href={localizedHref('/cart')}
@@ -259,6 +266,9 @@ export function Navbar() {
               </Link>
               <Link href={localizedHref('/cart')} className="block text-xs uppercase tracking-[0.15em] text-[#1A1A1A]">
                 Cart {cartCount > 0 && `(${cartCount})`}
+              </Link>
+              <Link href={localizedHref('/account')} className="block text-xs uppercase tracking-[0.15em] text-[#1A1A1A]">
+                {status === 'authenticated' && user ? `Account (${user.name})` : 'Account'}
               </Link>
               <div className="space-y-4 border-t border-[#E8E8E8] pt-5">
                 <HeaderPreferencesDropdown align="left" />
