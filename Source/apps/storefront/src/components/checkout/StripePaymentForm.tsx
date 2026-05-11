@@ -68,7 +68,10 @@ export function StripePaymentForm({ amount, onSuccess, onError }: StripePaymentF
   return (
     <form onSubmit={handleSubmit}>
       <div className="p-4 bg-[#F8F8F8] mb-6">
-        <label className="block text-[#6A6A6A] text-xs uppercase tracking-widest mb-3" style={{ letterSpacing: '0.1em' }}>
+        <label
+          className="block text-[#6A6A6A] text-xs uppercase tracking-widest mb-3"
+          style={{ letterSpacing: '0.1em' }}
+        >
           Card Information
         </label>
         <div className="bg-white border border-[#E0E0E0] px-4 py-3">

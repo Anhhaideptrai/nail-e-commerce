@@ -12,7 +12,13 @@ interface CartPreviewDialogProps {
   subtotal: number;
 }
 
-export function CartPreviewDialog({ open, onOpenChange, addedItem, cartCount, subtotal }: CartPreviewDialogProps) {
+export function CartPreviewDialog({
+  open,
+  onOpenChange,
+  addedItem,
+  cartCount,
+  subtotal,
+}: CartPreviewDialogProps) {
   if (!addedItem) return null;
 
   const displayPrice = addedItem.product.salePrice ?? addedItem.product.price;
@@ -26,7 +32,14 @@ export function CartPreviewDialog({ open, onOpenChange, addedItem, cartCount, su
             <div className="flex items-center justify-center size-10 bg-[#F0F8F4] rounded-full">
               <Check className="size-5 text-[#4A7A5A]" />
             </div>
-            <DialogTitle className="text-[#1A1A1A] text-left" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 500, fontSize: '1.4rem' }}>
+            <DialogTitle
+              className="text-[#1A1A1A] text-left"
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontWeight: 500,
+                fontSize: '1.4rem',
+              }}
+            >
               Added to Bag
             </DialogTitle>
           </div>
@@ -52,7 +65,10 @@ export function CartPreviewDialog({ open, onOpenChange, addedItem, cartCount, su
               <span>Length: {addedItem.length}</span>
             </div>
             <div className="flex items-center gap-3 mt-2">
-              <span className="text-[#1A1A1A] text-sm" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 500 }}>
+              <span
+                className="text-[#1A1A1A] text-sm"
+                style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 500 }}
+              >
                 ${displayPrice.toFixed(2)}
               </span>
               <span className="text-[#9A9A9A] text-xs">Qty: {addedItem.quantity}</span>
@@ -63,8 +79,17 @@ export function CartPreviewDialog({ open, onOpenChange, addedItem, cartCount, su
         {/* Cart Summary */}
         <div className="border-t border-[#F0F0F0] pt-4 pb-4">
           <div className="flex items-center justify-between text-sm mb-1">
-            <span className="text-[#5A5A5A]">Cart Total ({cartCount} {cartCount === 1 ? 'item' : 'items'})</span>
-            <span className="text-[#1A1A1A]" style={{ fontFamily: "'Cormorant Garamond', serif", fontWeight: 500, fontSize: '1.1rem' }}>
+            <span className="text-[#5A5A5A]">
+              Cart Total ({cartCount} {cartCount === 1 ? 'item' : 'items'})
+            </span>
+            <span
+              className="text-[#1A1A1A]"
+              style={{
+                fontFamily: "'Cormorant Garamond', serif",
+                fontWeight: 500,
+                fontSize: '1.1rem',
+              }}
+            >
               ${subtotal.toFixed(2)}
             </span>
           </div>

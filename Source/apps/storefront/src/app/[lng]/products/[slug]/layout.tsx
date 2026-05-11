@@ -1,14 +1,14 @@
-import type { Metadata } from 'next'
-import { products } from '@/MOCK_DATAS/products'
-import { createStorefrontMetadata } from '@/lib/seo'
+import type { Metadata } from 'next';
+import { products } from '@/MOCK_DATAS/products';
+import { createStorefrontMetadata } from '@/lib/seo';
 
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ lng: string; slug: string }>
+  params: Promise<{ lng: string; slug: string }>;
 }): Promise<Metadata> {
-  const { lng, slug } = await params
-  const product = products.find((item) => item.slug === slug)
+  const { lng, slug } = await params;
+  const product = products.find((item) => item.slug === slug);
 
   if (!product) {
     return {
@@ -17,10 +17,10 @@ export async function generateMetadata({
         path: `/products/${slug}`,
       }),
       title: 'Product not found',
-    }
+    };
   }
 
-  const displayPrice = product.salePrice ?? product.price
+  const displayPrice = product.salePrice ?? product.price;
 
   return {
     ...createStorefrontMetadata({
@@ -45,13 +45,9 @@ export async function generateMetadata({
       images: product.images,
       title: product.name,
     },
-  }
+  };
 }
 
-export default function ProductDetailLayout({
-  children,
-}: {
-  children: React.ReactNode
-}) {
-  return children
+export default function ProductDetailLayout({ children }: { children: React.ReactNode }) {
+  return children;
 }

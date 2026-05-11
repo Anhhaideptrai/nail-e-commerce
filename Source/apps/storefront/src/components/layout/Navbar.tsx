@@ -171,7 +171,9 @@ export function Navbar() {
                 </button>
                 <div
                   className={`absolute left-1/2 top-full z-50 min-w-[220px] -translate-x-1/2 pt-3 transition ${
-                    collectionsOpen ? 'pointer-events-auto opacity-100' : 'pointer-events-none opacity-0'
+                    collectionsOpen
+                      ? 'pointer-events-auto opacity-100'
+                      : 'pointer-events-none opacity-0'
                   }`}
                 >
                   <div className="border border-[#E5E5E5] bg-white py-2 shadow-lg">
@@ -243,7 +245,10 @@ export function Navbar() {
               </button>
             </div>
             <nav className="flex-1 space-y-6 overflow-y-auto px-6 py-8">
-              <Link href={localizedHref('/products')} className="block text-xs uppercase tracking-[0.15em] text-[#1A1A1A]">
+              <Link
+                href={localizedHref('/products')}
+                className="block text-xs uppercase tracking-[0.15em] text-[#1A1A1A]"
+              >
                 Shop All
               </Link>
               <div className="space-y-3">
@@ -258,16 +263,28 @@ export function Navbar() {
                   </Link>
                 ))}
               </div>
-              <Link href={localizedHref('/wholesales')} className="block text-xs uppercase tracking-[0.15em] text-[#1A1A1A]">
+              <Link
+                href={localizedHref('/wholesales')}
+                className="block text-xs uppercase tracking-[0.15em] text-[#1A1A1A]"
+              >
                 Wholesale
               </Link>
-              <Link href={localizedHref('/order/tracking')} className="block text-xs uppercase tracking-[0.15em] text-[#1A1A1A]">
+              <Link
+                href={localizedHref('/order/tracking')}
+                className="block text-xs uppercase tracking-[0.15em] text-[#1A1A1A]"
+              >
                 Track Order
               </Link>
-              <Link href={localizedHref('/cart')} className="block text-xs uppercase tracking-[0.15em] text-[#1A1A1A]">
+              <Link
+                href={localizedHref('/cart')}
+                className="block text-xs uppercase tracking-[0.15em] text-[#1A1A1A]"
+              >
                 Cart {cartCount > 0 && `(${cartCount})`}
               </Link>
-              <Link href={localizedHref('/account')} className="block text-xs uppercase tracking-[0.15em] text-[#1A1A1A]">
+              <Link
+                href={localizedHref('/account')}
+                className="block text-xs uppercase tracking-[0.15em] text-[#1A1A1A]"
+              >
                 {status === 'authenticated' && user ? `Account (${user.name})` : 'Account'}
               </Link>
               <div className="space-y-4 border-t border-[#E8E8E8] pt-5">

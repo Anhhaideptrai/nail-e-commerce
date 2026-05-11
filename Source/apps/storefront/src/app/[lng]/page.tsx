@@ -1,18 +1,12 @@
 'use client';
 
-import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { motion } from 'framer-motion';
-import {
-  ArrowRight,
-  Package,
-  RotateCcw,
-  Ruler,
-  Truck,
-} from 'lucide-react';
+import { ArrowRight, Package, RotateCcw, Ruler, Truck } from 'lucide-react';
 
 import { ProductCard } from '@/components/shared/ProductCard';
 import { ImageWithFallback } from '@/components/figma/ImageWithFallback';
+import { LinkBase } from '@/components/shared/LinkBase';
 import { products, heroImages } from '@/MOCK_DATAS/products';
 
 const newArrivals = products.filter((p) => p.isNew).slice(0, 4);
@@ -51,9 +45,7 @@ const SectionTitle = ({
   center?: boolean;
 }) => (
   <div className={center ? 'text-center' : ''}>
-    <p className="text-[#9A9A9A] uppercase text-xs tracking-[0.2em] mb-3">
-      {eyebrow}
-    </p>
+    <p className="text-[#9A9A9A] uppercase text-xs tracking-[0.2em] mb-3">{eyebrow}</p>
     <h2
       className="text-[#1A1A1A]"
       style={{
@@ -114,19 +106,19 @@ export default function HomePage() {
           </p>
 
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Link
+            <LinkBase
               href={localizedHref('/products')}
               className="inline-flex items-center justify-center gap-2 bg-white text-[#1A1A1A] px-9 py-4 text-xs uppercase tracking-[0.15em]"
             >
               Shop Collection <ArrowRight className="size-3.5" />
-            </Link>
+            </LinkBase>
 
-            <Link
+            <LinkBase
               href={localizedHref('/wholesales')}
               className="inline-flex items-center justify-center gap-2 border border-white text-white px-9 py-4 text-xs uppercase tracking-[0.15em]"
             >
               Wholesale Enquiry
-            </Link>
+            </LinkBase>
           </div>
         </motion.div>
       </section>
@@ -138,12 +130,8 @@ export default function HomePage() {
             {policies.map(({ icon: Icon, title, desc }) => (
               <div key={title} className="text-center px-6 py-8">
                 <Icon className="size-5 text-[#9A9A9A] mx-auto" />
-                <p className="text-xs uppercase tracking-widest mt-3">
-                  {title}
-                </p>
-                <p className="text-[#8A8A8A] text-xs mt-2 hidden md:block">
-                  {desc}
-                </p>
+                <p className="text-xs uppercase tracking-widest mt-3">{title}</p>
+                <p className="text-[#8A8A8A] text-xs mt-2 hidden md:block">{desc}</p>
               </div>
             ))}
           </div>
@@ -154,9 +142,9 @@ export default function HomePage() {
       <section className="py-20 max-w-7xl mx-auto px-4">
         <div className="flex justify-between mb-12">
           <SectionTitle eyebrow="Just Arrived" title="New Collection" />
-          <Link href={localizedHref('/products?filter=new')} className="text-xs uppercase">
+          <LinkBase href={localizedHref('/products?filter=new')} className="text-xs uppercase">
             View All
-          </Link>
+          </LinkBase>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -170,9 +158,12 @@ export default function HomePage() {
       <section className="py-20 max-w-7xl mx-auto px-4">
         <div className="flex justify-between mb-12">
           <SectionTitle eyebrow="Customer Favourites" title="Best Sellers" />
-          <Link href={localizedHref('/products?filter=bestseller')} className="text-xs uppercase">
+          <LinkBase
+            href={localizedHref('/products?filter=bestseller')}
+            className="text-xs uppercase"
+          >
             View All
-          </Link>
+          </LinkBase>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -189,12 +180,12 @@ export default function HomePage() {
           Wholesale partnerships available globally.
         </p>
 
-        <Link
+        <LinkBase
           href={localizedHref('/wholesales')}
           className="bg-white text-black px-8 py-3 uppercase text-xs tracking-widest"
         >
           Submit Enquiry <ArrowRight className="inline size-3 ml-2" />
-        </Link>
+        </LinkBase>
       </section>
     </>
   );

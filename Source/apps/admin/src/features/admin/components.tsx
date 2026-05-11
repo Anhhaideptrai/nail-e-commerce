@@ -56,9 +56,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
   const { logout, status, user } = useAdminAuth();
   const pathname = usePathname();
   const router = useRouter();
-  const [sidebarCollapsed, setSidebarCollapsed] = useState(() =>
-    getInitialSidebarCollapsed(),
-  );
+  const [sidebarCollapsed, setSidebarCollapsed] = useState(() => getInitialSidebarCollapsed());
   const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
 
   useEffect(() => {
@@ -76,10 +74,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
       const nextCollapsed = !collapsed;
 
       cachedSidebarCollapsed = nextCollapsed;
-      window.localStorage.setItem(
-        SIDEBAR_COLLAPSED_STORAGE_KEY,
-        String(nextCollapsed),
-      );
+      window.localStorage.setItem(SIDEBAR_COLLAPSED_STORAGE_KEY, String(nextCollapsed));
 
       return nextCollapsed;
     });
@@ -101,11 +96,7 @@ export function AdminShell({ children }: { children: ReactNode }) {
         }`}
       >
         <aside className="hidden border-r border-neutral-200 bg-white lg:block">
-          <div
-            className={`border-b border-neutral-200 py-6 ${
-              sidebarCollapsed ? 'px-3' : 'px-6'
-            }`}
-          >
+          <div className={`border-b border-neutral-200 py-6 ${sidebarCollapsed ? 'px-3' : 'px-6'}`}>
             <div
               className={`flex items-start gap-3 ${
                 sidebarCollapsed ? 'justify-center' : 'justify-between'
@@ -113,8 +104,12 @@ export function AdminShell({ children }: { children: ReactNode }) {
             >
               {!sidebarCollapsed ? (
                 <div>
-                <p className="text-xs uppercase tracking-[0.18em] text-neutral-500">{t('common.brand')}</p>
-                <h1 className="mt-2 text-xl font-semibold tracking-tight">{t('common.adminConsole')}</h1>
+                  <p className="text-xs uppercase tracking-[0.18em] text-neutral-500">
+                    {t('common.brand')}
+                  </p>
+                  <h1 className="mt-2 text-xl font-semibold tracking-tight">
+                    {t('common.adminConsole')}
+                  </h1>
                 </div>
               ) : null}
               <button
@@ -154,8 +149,12 @@ export function AdminShell({ children }: { children: ReactNode }) {
                   <Menu className="size-5" />
                 </button>
                 <div>
-                  <p className="text-xs uppercase tracking-[0.18em] text-neutral-500">{t('common.cmsAdmin')}</p>
-                  <h2 className="mt-1 text-xl font-semibold tracking-tight sm:text-2xl">{t('common.operationsDashboard')}</h2>
+                  <p className="text-xs uppercase tracking-[0.18em] text-neutral-500">
+                    {t('common.cmsAdmin')}
+                  </p>
+                  <h2 className="mt-1 text-xl font-semibold tracking-tight sm:text-2xl">
+                    {t('common.operationsDashboard')}
+                  </h2>
                 </div>
               </div>
               <div className="flex min-w-0 flex-wrap items-center gap-2 md:justify-end">
@@ -217,8 +216,12 @@ export function AdminShell({ children }: { children: ReactNode }) {
           <aside className="absolute left-0 top-0 flex h-full w-80 max-w-[86vw] flex-col border-r border-neutral-200 bg-white shadow-xl">
             <div className="flex items-start justify-between gap-4 border-b border-neutral-200 px-5 py-5">
               <div>
-                <p className="text-xs uppercase tracking-[0.18em] text-neutral-500">{t('common.brand')}</p>
-                <h1 className="mt-2 text-xl font-semibold tracking-tight">{t('common.adminConsole')}</h1>
+                <p className="text-xs uppercase tracking-[0.18em] text-neutral-500">
+                  {t('common.brand')}
+                </p>
+                <h1 className="mt-2 text-xl font-semibold tracking-tight">
+                  {t('common.adminConsole')}
+                </h1>
               </div>
               <button
                 aria-label="Close navigation"
@@ -257,8 +260,7 @@ function getInitialSidebarCollapsed() {
     return false;
   }
 
-  cachedSidebarCollapsed =
-    window.localStorage.getItem(SIDEBAR_COLLAPSED_STORAGE_KEY) === 'true';
+  cachedSidebarCollapsed = window.localStorage.getItem(SIDEBAR_COLLAPSED_STORAGE_KEY) === 'true';
 
   return cachedSidebarCollapsed;
 }
@@ -286,7 +288,8 @@ function AdminNavItem({
         active
           ? 'bg-neutral-950 text-white hover:bg-neutral-900'
           : 'text-neutral-700 hover:bg-neutral-100 hover:text-neutral-950'
-      } ${collapsed ? 'grid place-items-center px-2 py-2.5' : 'flex items-start gap-3 px-3 py-2.5'
+      } ${
+        collapsed ? 'grid place-items-center px-2 py-2.5' : 'flex items-start gap-3 px-3 py-2.5'
       }`}
       href={href}
       title={collapsed ? label : undefined}
@@ -296,8 +299,8 @@ function AdminNavItem({
           active
             ? 'bg-white/10 text-white'
             : collapsed
-            ? 'bg-neutral-100 text-neutral-600 group-hover:bg-neutral-950 group-hover:text-white'
-            : 'bg-neutral-100 text-neutral-500 group-hover:bg-white group-hover:text-neutral-900'
+              ? 'bg-neutral-100 text-neutral-600 group-hover:bg-neutral-950 group-hover:text-white'
+              : 'bg-neutral-100 text-neutral-500 group-hover:bg-white group-hover:text-neutral-900'
         }`}
       >
         <Icon className="size-4" />
@@ -373,7 +376,9 @@ export function Panel({
     <section className="min-w-0 rounded-lg border border-neutral-200 bg-white">
       <div className="border-b border-neutral-200 p-4 sm:p-5">
         <h3 className="text-lg font-semibold tracking-tight">{title}</h3>
-        {description ? <p className="mt-1 text-sm leading-6 text-neutral-500">{description}</p> : null}
+        {description ? (
+          <p className="mt-1 text-sm leading-6 text-neutral-500">{description}</p>
+        ) : null}
       </div>
       <div className="p-4 sm:p-5">{children}</div>
     </section>
@@ -385,10 +390,7 @@ export function DataTable({ columns, rows }: { columns: string[]; rows: TableRow
     <>
       <div className="grid gap-3 md:hidden">
         {rows.map((row, rowIndex) => (
-          <article
-            className="rounded-md border border-neutral-200 bg-white p-3"
-            key={rowIndex}
-          >
+          <article className="rounded-md border border-neutral-200 bg-white p-3" key={rowIndex}>
             <div className="grid gap-2">
               {row.map((cell, cellIndex) => (
                 <div
@@ -398,9 +400,7 @@ export function DataTable({ columns, rows }: { columns: string[]; rows: TableRow
                   <span className="text-xs font-medium uppercase tracking-[0.08em] text-neutral-400">
                     {columns[cellIndex]}
                   </span>
-                  <span className="min-w-0 break-words text-right text-neutral-700">
-                    {cell}
-                  </span>
+                  <span className="min-w-0 break-words text-right text-neutral-700">{cell}</span>
                 </div>
               ))}
             </div>
@@ -437,7 +437,9 @@ export function DataTable({ columns, rows }: { columns: string[]; rows: TableRow
 
 export function StatusBadge({ children, tone }: { children: ReactNode; tone: Tone }) {
   return (
-    <span className={`inline-flex rounded-full border px-2 py-1 text-xs font-medium ${toneStyles[tone]}`}>
+    <span
+      className={`inline-flex rounded-full border px-2 py-1 text-xs font-medium ${toneStyles[tone]}`}
+    >
       {children}
     </span>
   );
@@ -468,13 +470,7 @@ export function Field({
   );
 }
 
-export function SelectField({
-  label,
-  options,
-}: {
-  label: string;
-  options: string[];
-}) {
+export function SelectField({ label, options }: { label: string; options: string[] }) {
   return (
     <label className="grid min-w-0 gap-1.5 text-sm font-medium text-neutral-700">
       {label}
