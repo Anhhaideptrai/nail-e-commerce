@@ -29,7 +29,7 @@ export interface MockOrder {
   subtotal: number;
   discount: number;
   total: number;
-  status: 'Processing' | 'Shipped' | 'Delivered';
+  status: 'Processing' | 'Shipped' | 'Delivered' | 'Crafting';
   createdAt: string;
   shippingAddress: {
     firstName: string;
@@ -50,8 +50,14 @@ export interface CartState {
 
 type CartAction =
   | { type: 'ADD_ITEM'; payload: CartItem }
-  | { type: 'REMOVE_ITEM'; payload: { productId: string; size: string; shape: string; length: string } }
-  | { type: 'UPDATE_QUANTITY'; payload: { productId: string; size: string; shape: string; length: string; quantity: number } }
+  | {
+      type: 'REMOVE_ITEM';
+      payload: { productId: string; size: string; shape: string; length: string };
+    }
+  | {
+      type: 'UPDATE_QUANTITY';
+      payload: { productId: string; size: string; shape: string; length: string; quantity: number };
+    }
   | { type: 'APPLY_DISCOUNT'; payload: { code: string; rate: number } }
   | { type: 'REMOVE_DISCOUNT' }
   | { type: 'CLEAR_CART' };
@@ -66,15 +72,18 @@ function cartReducer(state: CartState, action: CartAction): CartState {
   switch (action.type) {
     case 'ADD_ITEM': {
       const existing = state.items.findIndex(
-        i =>
+        (i) =>
           i.product.id === action.payload.product.id &&
           i.size === action.payload.size &&
           i.shape === action.payload.shape &&
-          i.length === action.payload.length
+          i.length === action.payload.length,
       );
       if (existing !== -1) {
         const updated = [...state.items];
-        updated[existing] = { ...updated[existing], quantity: updated[existing].quantity + action.payload.quantity };
+        updated[existing] = {
+          ...updated[existing],
+          quantity: updated[existing].quantity + action.payload.quantity,
+        };
         return { ...state, items: updated };
       }
       return { ...state, items: [...state.items, action.payload] };
@@ -93,13 +102,13 @@ function cartReducer(state: CartState, action: CartAction): CartState {
       }
       return {
         ...state,
-        items: state.items.map(i =>
+        items: state.items.map((i) =>
           i.product.id === action.payload.productId &&
           i.size === action.payload.size &&
           i.shape === action.payload.shape &&
           i.length === action.payload.length
             ? { ...i, quantity: action.payload.quantity }
-            : i
+            : i,
         ),
       };
     }

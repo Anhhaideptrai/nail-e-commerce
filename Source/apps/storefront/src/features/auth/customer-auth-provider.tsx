@@ -1,38 +1,20 @@
 'use client';
 
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-  type ReactNode,
-} from 'react';
-import {
-  getCurrentCustomer,
-  loginCustomer,
-  registerCustomer,
-} from './customer-auth.api';
+import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react';
+import { getCurrentCustomer, loginCustomer, registerCustomer } from './customer-auth.api';
 import {
   clearStoredCustomerTokens,
   getStoredCustomerTokens,
   setStoredCustomerTokens,
 } from './customer-auth.storage';
-import type {
-  CustomerAuthTokens,
-  CustomerUser,
-} from './customer-auth.types';
+import type { CustomerAuthTokens, CustomerUser } from './customer-auth.types';
 
 type CustomerAuthStatus = 'checking' | 'authenticated' | 'guest';
 
 type CustomerAuthContextValue = {
   login: (email: string, password: string) => Promise<void>;
   logout: () => void;
-  register: (input: {
-    email: string;
-    name: string;
-    password: string;
-  }) => Promise<void>;
+  register: (input: { email: string; name: string; password: string }) => Promise<void>;
   status: CustomerAuthStatus;
   tokens: CustomerAuthTokens | null;
   user: CustomerUser | null;
@@ -97,11 +79,7 @@ export function CustomerAuthProvider({ children }: { children: ReactNode }) {
     setStatus('guest');
   }
 
-  return (
-    <CustomerAuthContext.Provider value={value}>
-      {children}
-    </CustomerAuthContext.Provider>
-  );
+  return <CustomerAuthContext.Provider value={value}>{children}</CustomerAuthContext.Provider>;
 }
 
 export function useCustomerAuth() {

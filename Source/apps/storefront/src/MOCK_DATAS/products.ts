@@ -40,15 +40,24 @@ export const DISCOUNT_CODES: Record<string, number> = {
   EU20: 0.2,
 };
 
-const img1 = 'https://images.unsplash.com/photo-1696341980130-4bdff3322802?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800';
-const img2 = 'https://images.unsplash.com/photo-1777287852750-53eb2ca506e9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800';
-const img3 = 'https://images.unsplash.com/photo-1646235833267-4e077ebfb591?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800';
-const img4 = 'https://images.unsplash.com/photo-1720487051716-dc968613784f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800';
-const img5 = 'https://images.unsplash.com/photo-1772191530787-b9546da02fbc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800';
-const img6 = 'https://images.unsplash.com/photo-1722061608664-f84242d3d2cb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800';
-const img7 = 'https://images.unsplash.com/photo-1736628293375-ff94e4874aac?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800';
-const img8 = 'https://images.unsplash.com/photo-1671397548908-688f17194415?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800';
-const img9 = 'https://images.unsplash.com/photo-1674383600495-bfa0405f3c93?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800';
+const img1 =
+  'https://images.unsplash.com/photo-1696341980130-4bdff3322802?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800';
+const img2 =
+  'https://images.unsplash.com/photo-1777287852750-53eb2ca506e9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800';
+const img3 =
+  'https://images.unsplash.com/photo-1646235833267-4e077ebfb591?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800';
+const img4 =
+  'https://images.unsplash.com/photo-1720487051716-dc968613784f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800';
+const img5 =
+  'https://images.unsplash.com/photo-1772191530787-b9546da02fbc?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800';
+const img6 =
+  'https://images.unsplash.com/photo-1722061608664-f84242d3d2cb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800';
+const img7 =
+  'https://images.unsplash.com/photo-1736628293375-ff94e4874aac?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800';
+const img8 =
+  'https://images.unsplash.com/photo-1671397548908-688f17194415?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800';
+const img9 =
+  'https://images.unsplash.com/photo-1674383600495-bfa0405f3c93?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800';
 
 export const products: Product[] = [
   {
@@ -59,7 +68,8 @@ export const products: Product[] = [
     images: [img1, img3, img5],
     category: 'french-classic',
     collection: 'French & Classic',
-    description: 'Timeless French tips crafted with precision and care. Our Aurora French Tips feature a classic white tip on a sheer nude base, perfect for any occasion. Each set is handcrafted to deliver a salon-quality finish that lasts up to 14 days.',
+    description:
+      'Timeless French tips crafted with precision and care. Our Aurora French Tips feature a classic white tip on a sheer nude base, perfect for any occasion. Each set is handcrafted to deliver a salon-quality finish that lasts up to 14 days.',
     material: 'Premium ABS acrylic with gel topcoat',
     inStock: true,
     isNew: false,
@@ -80,7 +90,8 @@ export const products: Product[] = [
     images: [img2, img1, img4],
     category: 'glitter-metallic',
     collection: 'Glitter & Metallic',
-    description: 'Luminous silver shimmer that catches every light. Hand-painted with ultra-fine metallic pigment for an otherworldly shine. Each nail is individually crafted to ensure perfection.',
+    description:
+      'Luminous silver shimmer that catches every light. Hand-painted with ultra-fine metallic pigment for an otherworldly shine. Each nail is individually crafted to ensure perfection.',
     material: 'Premium ABS acrylic with metallic chrome powder',
     inStock: true,
     isNew: true,
@@ -101,7 +112,8 @@ export const products: Product[] = [
     images: [img6, img8, img5],
     category: 'solid-colors',
     collection: 'Solid Colors',
-    description: 'Soft, romantic rose pink that complements every skin tone. Minimalist yet utterly feminine. A wardrobe staple for every nail enthusiast.',
+    description:
+      'Soft, romantic rose pink that complements every skin tone. Minimalist yet utterly feminine. A wardrobe staple for every nail enthusiast.',
     material: 'Premium ABS acrylic with gel topcoat',
     inStock: true,
     isNew: false,
@@ -122,7 +134,8 @@ export const products: Product[] = [
     images: [img5, img7, img1],
     category: 'solid-colors',
     collection: 'Solid Colors',
-    description: 'Deep, rich black that exudes sophistication. Perfect for bold statements and evening looks. Ultra-smooth finish with a glossy topcoat for a luxurious appearance.',
+    description:
+      'Deep, rich black that exudes sophistication. Perfect for bold statements and evening looks. Ultra-smooth finish with a glossy topcoat for a luxurious appearance.',
     material: 'Premium ABS acrylic with gel topcoat',
     inStock: true,
     isNew: false,
@@ -143,7 +156,8 @@ export const products: Product[] = [
     images: [img3, img8, img2],
     category: 'french-classic',
     collection: 'French & Classic',
-    description: 'Inspired by the lustrous sheen of natural pearls. Our Pearl Luxe collection features a milky white base with subtle iridescent shimmer, creating an ethereal, otherworldly effect that is unmistakably premium.',
+    description:
+      'Inspired by the lustrous sheen of natural pearls. Our Pearl Luxe collection features a milky white base with subtle iridescent shimmer, creating an ethereal, otherworldly effect that is unmistakably premium.',
     material: 'Premium ABS acrylic with pearl powder and gel topcoat',
     inStock: true,
     isNew: false,
@@ -164,7 +178,8 @@ export const products: Product[] = [
     images: [img5, img6, img8],
     category: 'french-classic',
     collection: 'French & Classic',
-    description: 'Effortlessly natural. Crystal Nude offers a barely-there look that enhances your natural beauty. Perfect for professional settings or everyday elegance.',
+    description:
+      'Effortlessly natural. Crystal Nude offers a barely-there look that enhances your natural beauty. Perfect for professional settings or everyday elegance.',
     material: 'Premium ABS acrylic with gel topcoat',
     inStock: true,
     isNew: true,
@@ -185,7 +200,8 @@ export const products: Product[] = [
     images: [img9, img4, img6],
     category: 'nail-art',
     collection: 'Nail Art',
-    description: 'Hand-painted botanical motifs inspired by European garden landscapes. Each nail features unique floral and leaf designs, making every set a wearable work of art. No two sets are exactly alike.',
+    description:
+      'Hand-painted botanical motifs inspired by European garden landscapes. Each nail features unique floral and leaf designs, making every set a wearable work of art. No two sets are exactly alike.',
     material: 'Premium ABS acrylic with hand-painted nail art and gel seal',
     inStock: true,
     isNew: false,
@@ -206,7 +222,8 @@ export const products: Product[] = [
     images: [img2, img7, img3],
     category: 'glitter-metallic',
     collection: 'Glitter & Metallic',
-    description: 'Dazzling gold that commands attention. Handcrafted with 24K gold-finish powder for a rich, warm luminosity. Ideal for celebrations, events, or whenever you wish to shine.',
+    description:
+      'Dazzling gold that commands attention. Handcrafted with 24K gold-finish powder for a rich, warm luminosity. Ideal for celebrations, events, or whenever you wish to shine.',
     material: 'Premium ABS acrylic with 24K gold powder and gel topcoat',
     inStock: true,
     isNew: false,
@@ -227,7 +244,8 @@ export const products: Product[] = [
     images: [img8, img4, img1],
     category: 'solid-colors',
     collection: 'Solid Colors',
-    description: 'The timeless red nail, reimagined with exceptional quality. Classic Rouge is vibrant, rich, and undeniably chic. An essential in every collection.',
+    description:
+      'The timeless red nail, reimagined with exceptional quality. Classic Rouge is vibrant, rich, and undeniably chic. An essential in every collection.',
     material: 'Premium ABS acrylic with gel topcoat',
     inStock: true,
     isNew: false,
@@ -248,7 +266,8 @@ export const products: Product[] = [
     images: [img7, img5, img9],
     category: 'solid-colors',
     collection: 'Solid Colors',
-    description: 'A delicate lavender that feels like spring in Provence. Soft, dreamy, and effortlessly stylish. Perfect for warm weather or whenever you need a touch of gentle color.',
+    description:
+      'A delicate lavender that feels like spring in Provence. Soft, dreamy, and effortlessly stylish. Perfect for warm weather or whenever you need a touch of gentle color.',
     material: 'Premium ABS acrylic with gel topcoat',
     inStock: true,
     isNew: true,
@@ -270,7 +289,8 @@ export const products: Product[] = [
     images: [img4, img2, img7],
     category: 'nail-art',
     collection: 'Nail Art',
-    description: 'Inspired by Carrara marble, this collection features delicate veining on a white base. Each nail is individually hand-painted to capture the organic beauty of natural stone. A true conversation starter.',
+    description:
+      'Inspired by Carrara marble, this collection features delicate veining on a white base. Each nail is individually hand-painted to capture the organic beauty of natural stone. A true conversation starter.',
     material: 'Premium ABS acrylic with hand-painted marble art and gel seal',
     inStock: true,
     isNew: false,
@@ -292,7 +312,8 @@ export const products: Product[] = [
     images: [img6, img9, img3],
     category: 'solid-colors',
     collection: 'Solid Colors',
-    description: 'Sun-kissed coral inspired by the French Riviera. Warm, vibrant, and full of joie de vivre. This season\'s must-have shade for the free-spirited.',
+    description:
+      "Sun-kissed coral inspired by the French Riviera. Warm, vibrant, and full of joie de vivre. This season's must-have shade for the free-spirited.",
     material: 'Premium ABS acrylic with gel topcoat',
     inStock: false,
     isNew: false,
@@ -307,16 +328,23 @@ export const products: Product[] = [
   },
 ];
 
-export const getProductById = (id: string) => products.find(p => p.id === id);
-export const getProductBySlug = (slug: string) => products.find(p => p.slug === slug);
+export const getProductById = (id: string) => products.find((p) => p.id === id);
+export const getProductBySlug = (slug: string) => products.find((p) => p.slug === slug);
 export const getRelatedProducts = (product: Product, count = 4) =>
   products
-    .filter(p => p.id !== product.id && (p.category === product.category || p.collection === product.collection))
+    .filter(
+      (p) =>
+        p.id !== product.id &&
+        (p.category === product.category || p.collection === product.collection),
+    )
     .slice(0, count);
 
 export const heroImages = {
   main: 'https://images.unsplash.com/photo-1722061608664-f84242d3d2cb?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1800',
-  secondary: 'https://images.unsplash.com/photo-1696341980130-4bdff3322802?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1200',
-  about1: 'https://images.unsplash.com/photo-1736628293375-ff94e4874aac?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800',
-  about2: 'https://images.unsplash.com/photo-1759563874675-5bc5c17c9393?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800',
+  secondary:
+    'https://images.unsplash.com/photo-1696341980130-4bdff3322802?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=1200',
+  about1:
+    'https://images.unsplash.com/photo-1736628293375-ff94e4874aac?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800',
+  about2:
+    'https://images.unsplash.com/photo-1759563874675-5bc5c17c9393?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=800',
 };
