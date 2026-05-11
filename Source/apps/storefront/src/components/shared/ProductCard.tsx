@@ -1,8 +1,7 @@
 'use client';
 
-import Link from 'next/link';
-import { useParams } from 'next/navigation';
 import { motion } from 'motion/react';
+import { LinkBase } from '@/components/shared/LinkBase';
 import { ImageWithFallback } from '../figma/ImageWithFallback';
 import { Product } from '@/MOCK_DATAS/products';
 
@@ -13,8 +12,6 @@ interface ProductCardProps {
 
 export function ProductCard({ product, className = '' }: ProductCardProps) {
   const displayPrice = product.salePrice ?? product.price;
-  const params = useParams<{ lng?: string }>();
-  const lng = params.lng ?? 'en';
 
   return (
     <motion.div
@@ -24,8 +21,7 @@ export function ProductCard({ product, className = '' }: ProductCardProps) {
       transition={{ duration: 0.5, ease: 'easeOut' }}
       className={`group ${className}`}
     >
-      <Link href={`/${lng}/products/${product.id}`} className="block">
-        {/* Image */}
+      <LinkBase href={`/products/${product.slug}`} className="block">
         <div className="relative overflow-hidden bg-[#F5F5F5] aspect-[3/4]">
           <ImageWithFallback
             src={product.images[0]}
@@ -119,7 +115,7 @@ export function ProductCard({ product, className = '' }: ProductCardProps) {
             <span className="text-[#9A9A9A] text-[10px]">({product.reviewCount})</span>
           </div>
         </div>
-      </Link>
+      </LinkBase>
     </motion.div>
   );
 }
