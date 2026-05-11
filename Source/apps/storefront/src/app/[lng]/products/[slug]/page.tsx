@@ -42,6 +42,31 @@ export default function ProductDetailPage() {
   }
 
   const displayPrice = product.salePrice ?? product.price;
+  const productJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    aggregateRating: {
+      '@type': 'AggregateRating',
+      ratingValue: product.rating,
+      reviewCount: product.reviewCount,
+    },
+    brand: {
+      '@type': 'Brand',
+      name: 'Silver14 Nail',
+    },
+    description: product.description,
+    image: product.images,
+    name: product.name,
+    offers: {
+      '@type': 'Offer',
+      availability: product.inStock
+        ? 'https://schema.org/InStock'
+        : 'https://schema.org/OutOfStock',
+      price: displayPrice,
+      priceCurrency: 'USD',
+    },
+    sku: product.id,
+  };
 
   const handleAddToCart = () => {
     if (!selectedSize || !selectedShape || !selectedLength) return;
@@ -128,6 +153,12 @@ export default function ProductDetailPage() {
 
   return (
     <div className="min-h-screen pt-16 md:pt-20">
+      <script
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify(productJsonLd),
+        }}
+        type="application/ld+json"
+      />
       {/* Breadcrumb */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-5 flex items-center gap-2 text-xs text-[#9A9A9A]">
         <button onClick={() => router.back()} className="flex items-center gap-1.5 hover:text-[#1A1A1A] transition-colors">

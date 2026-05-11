@@ -2,6 +2,8 @@ import { Logger, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app/app.module';
 
+const DEFAULT_API_PORT = 3000;
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const globalPrefix = 'api';
@@ -18,7 +20,7 @@ async function bootstrap() {
     }),
   );
 
-  const port = process.env.PORT || 3000;
+  const port = process.env.PORT || DEFAULT_API_PORT;
   await app.listen(port);
   Logger.log(`API is running on http://localhost:${port}/${globalPrefix}`);
 }
